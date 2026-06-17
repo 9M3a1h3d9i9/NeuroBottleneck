@@ -1,1 +1,1 @@
-# NeuroBottleneck
+# NeuroBottleneck Research Project 
