@@ -1,7 +1,7 @@
 # This file is the beating heart of the settings
 # So we don't have to manually change hyperparameters in all files
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 @dataclass
 class NetworkConfig:
@@ -23,7 +23,12 @@ class PPOConfig:
 
 @dataclass
 class MainConfig:
-    network: NetworkConfig = NetworkConfig()
-    ppo: PPOConfig = PPOConfig()
+    # network: NetworkConfig = NetworkConfig()                          .* Mini Eror
+    # ppo: PPOConfig = PPOConfig()                                      .* Mini Eror
+
+    # استفاده از default_factory برای شیءهای تغییرپذیر جهت رفع خطای پایتون
+    # Using default_factory for mutable objects to avoid Python error    .* Mini Eror : Solved
+    network: NetworkConfig = field(default_factory=NetworkConfig)
+    ppo: PPOConfig = field(default_factory=PPOConfig)
     seed: int = 42
     max_episodes: int = 1000

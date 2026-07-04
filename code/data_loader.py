@@ -76,15 +76,57 @@ if __name__ == "__main__":
     # یک تست کوچک برای اطمینان از صحت کارکرد ماژول
     # A small test to ensure the module works correctly
     from config import MainConfig
+    import matplotlib.pyplot as plt 
+    # Initialize the configuration (مقدار دهی اولیه تنظیمات)
     cfg = MainConfig()
+    # تغییر موقتی تعداد نود ها(برای خروجی بهتر) تمیز تر در تصویر
+    cfg.network.num_nodes = 10
+    cfg.network.edge_probability = 0.4
+
     loader = ORanDataLoader(cfg.network)
     
-    g = loader.generate_synthetic_topology()
-    print(f"Graph generated successfully with {g.number_of_nodes()} nodes and {g.number_of_edges()} edges.")
+    # تولید توپولوژی شبکه و محاسبه درخت گلوگاه
+    G = loader.generate_synthetic_topology()
+    gh_tree = loader.compute_gomory_hu_tree()
     
-    x, edge_index = loader.get_gnn_inputs()
-    print(f"GNN Feature Tensor Shape: {x.shape}")
-    print(f"GNN Edge Index Shape: {edge_index.shape}")
+    # رسم تصاویر به صورت متناظر و همزمان
+    fig, axes = plt.subplots(1, 2, figsize=(15, 7))
+    
+    #  رسم گراف اصلی شبکه O-RAN
+    # Draw the original O-RAN network graph
+    pos = nx.spring_layout(G, seed=42)
+    nx.draw(G, pos, ax=axes[0], with_labels=True, node_color='skyblue', 
+            node_size=600, font_weight='bold', edge_color='gray')
+    edge_labels = nx.get_edge_attributes(G, 'capacity')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, ax=axes[0], font_size=8)
+    axes[0].set_title("Original O-RAN Topology\n(Labels = Link Capacities)", fontsize=12)
+    
+    # رسم درخت گوموری-هو (ساختار شکست گلوگاه‌ها)
+    # Draw Gomory-Hu tree (bottleneck structure)
+    # در خروجی networkx، ظرفیتِ مینیمم کات در درخت با کلید 'weight' ذخیره می‌شود
+    # In networkx output, min-cut capacity in the tree is stored with the key 'weight'
+    pos_gh = nx.circular_layout(gh_tree)
+    nx.draw(gh_tree, pos_gh, ax=axes[1], with_labels=True, node_color='lightgreen', 
+            node_size=600, font_weight='bold', edge_color='brown', width=2)
+    gh_labels = nx.get_edge_attributes(gh_tree, 'weight')
+    nx.draw_networkx_edge_labels(gh_tree, pos_gh, edge_labels=gh_labels, ax=axes[1], font_size=8)
+    axes[1].set_title("Gomory-Hu Tree\n(Labels = Max-Flow / Min-Cut Capacity)", fontsize=12)
+    
+    # ذخیره خروجی در قالب فایل تصویر
+    # Save the output as an image file
+    output_path = "bottleneck_analysis.png"
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=300)
+    print(f"\n[OK.] Visualization successfully saved as '{output_path}'")
+
+    # g = loader.generate_synthetic_topology()
+    # print(f"Graph generated successfully with {g.number_of_nodes()} nodes and {g.number_of_edges()} edges.")
+    
+    # x, edge_index = loader.get_gnn_inputs()
+    # print(f"GNN Feature Tensor Shape: {x.shape}")
+    # print(f"GNN Edge Index Shape: {edge_index.shape}")
+
+
 
 
     # ممکن از کامنت هایی که به زبان انگلیسی نوشته شده اند، غلط املایی جزئی داشته باشند
