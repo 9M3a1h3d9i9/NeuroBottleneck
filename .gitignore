@@ -9,3 +9,4 @@ __pycache__/
 *.synctex.gz 
 .DS_Store 
 venv/
+data/raw/dynamic_traffic/
