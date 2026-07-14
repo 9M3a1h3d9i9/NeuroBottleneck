@@ -1,0 +1,194 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="EWtpytO0UZnjmldyqKqS">
+    <mxGraphModel dx="1258" dy="1672" grid="1" gridSize="24" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&#xa;  &quot;data&quot;: &quot;graph TD\n    %% تعریف استایل‌ها برای ظاهر شکیل در draw.io\n    classDef inputStyle fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000;\n    classDef mathStyle fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000;\n    classDef maskStyle fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#000;\n    classDef drlStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#000;\n\n    subgraph Layer1 [لایه ۱: استخراج تله‌متری و تحلیل دترمینستیک ساختار]\n        A[توپولوژی شبکه همراه اول G=V,E]:::inputStyle --&gt; B[ماتریس ظرفیت لینک‌ها &amp; تقاضای تله‌متری C]:::inputStyle\n        B --&gt; C[الگوریتم Gusfield / قضیه Picard]:::mathStyle\n        C --&gt; D[ساختار درخت گوموری-هو Gomory-Hu Tree]:::mathStyle\n    end\n\n    subgraph Layer2 [لایه ۲: ارزیابی شرایط بحران و لایه قطعی پوشش‌گذاری]\n        D --&gt; E{تحلیل شرط برش کمینه Min-Cut}:::maskStyle\n        E -- \&quot;انفجار ترافیک Flash Crowd &lt;br&gt; d &lt;= c(S,T)\&quot; --&gt; F[محاسبه ظرفیت مازاد لینک‌های بحرانی]:::maskStyle\n        E -- \&quot;قطع فیبر نوری Fiber Cut &lt;br&gt; d &gt; c(S,T)\&quot; --&gt; G[شناسایی گره‌های دو سوی برش کمینه]:::maskStyle\n        F --&gt; H[تولید ماتریس باینری ماسک کنش M]:::maskStyle\n        G --&gt; H\n    end\n\n    subgraph Layer3 [لایه ۳: تصمیم‌گیری هوشمند مقید - DRL Agent]\n        I[عامل هوشمند PPO: خروجی توزیع احتمال اکشن‌ها]:::drlStyle --&gt; J[اعمال فیلتر ضرب عنصری Element-wise Product]:::drlStyle\n        H --&gt; J\n        J --&gt; K[اکشن تعدیل‌شده و ۱۰۰٪ امن مسیریابی مجدد]:::drlStyle\n    end\n\n    %% لایه‌های پانویس و اتصالات مستقیم به مراجع علمی\n    note1[مرجع: Gusfield 1990] .- C\n    note2[مرجع: Schulman et al. 2017 PPO] .- I\n    note3[مرجع: ETSI TS 128 100 لایه خودترمیمی] .- E&quot;,&#xa;  &quot;config&quot;: null&#xa;}" id="0iJB6Y-VVY_jcuwcY-rq-1">
+          <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=20;" vertex="1">
+            <mxGeometry height="1407" width="1520" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="لایه ۱: استخراج تله‌ متری و تحلیل دترمینستیک ساختار ( ساختار قطعی )" mermaidId="n:Layer1" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="لایه ۱: استخراج تله‌متری و تحلیل دترمینستیک ساختار" id="0iJB6Y-VVY_jcuwcY-rq-2">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-1" style="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="436" width="1000" x="444" y="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="توپولوژی شبکه همراه اول G=V,E" mermaidId="n:A" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e1f5fe;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="توپولوژی شبکه همراه اول G=V,E" id="0iJB6Y-VVY_jcuwcY-rq-3">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-2" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=default;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="619.2893401015228" x="190.35532994923858" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ماتریس ظرفیت لینک‌ها و تقاضای تله‌متری C" mermaidId="n:B" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e1f5fe;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="ماتریس ظرفیت لینک‌ها &amp; تقاضای تله‌متری C" id="0iJB6Y-VVY_jcuwcY-rq-4">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-2" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e1f5fe;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="769.0355329949238" x="114.21319796954316" y="149" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="الگوریتم Gusfield / قضیه Picard" mermaidId="n:C" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="الگوریتم Gusfield / قضیه Picard" id="0iJB6Y-VVY_jcuwcY-rq-5">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-2" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="662.4365482233502" x="167.51269035532997" y="253" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ساختار درخت گوموری-هو Gomory-Hu Tree" mermaidId="n:D" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="ساختار درخت گوموری-هو Gomory-Hu Tree" id="0iJB6Y-VVY_jcuwcY-rq-6">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-2" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="822.3350253807107" x="88.83248730964468" y="357" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:A-&gt;B#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="0iJB6Y-VVY_jcuwcY-rq-7">
+          <mxCell edge="1" parent="0iJB6Y-VVY_jcuwcY-rq-2" source="0iJB6Y-VVY_jcuwcY-rq-3" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="0iJB6Y-VVY_jcuwcY-rq-4">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:B-&gt;C#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="0iJB6Y-VVY_jcuwcY-rq-8">
+          <mxCell edge="1" parent="0iJB6Y-VVY_jcuwcY-rq-2" source="0iJB6Y-VVY_jcuwcY-rq-4" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="0iJB6Y-VVY_jcuwcY-rq-5">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:C-&gt;D#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="0iJB6Y-VVY_jcuwcY-rq-9">
+          <mxCell edge="1" parent="0iJB6Y-VVY_jcuwcY-rq-2" source="0iJB6Y-VVY_jcuwcY-rq-5" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="0iJB6Y-VVY_jcuwcY-rq-6">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="لایه ۲: ارزیابی شرایط بحران و لایه قطعی پوشش‌ گذاری" mermaidId="n:Layer2" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="لایه ۲: ارزیابی شرایط بحران و لایه قطعی پوشش‌گذاری" id="0iJB6Y-VVY_jcuwcY-rq-10">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-1" style="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="643" width="866" x="625" y="744" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="تحلیل شرط برش کمینه Min-Cut" mermaidId="n:E" mermaidBaseStyle="rhombus;html=1;strokeWidth=2;whiteSpace=wrap;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="تحلیل شرط برش کمینه Min-Cut" id="0iJB6Y-VVY_jcuwcY-rq-11">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-10" style="rhombus;html=1;strokeWidth=2;whiteSpace=wrap;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="302" width="302" x="166" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="محاسبه ظرفیت مازاد لینک‌ های بحرانی" mermaidId="n:F" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="محاسبه ظرفیت مازاد لینک‌های بحرانی" id="0iJB6Y-VVY_jcuwcY-rq-12">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-10" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="263" x="340" y="435" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="شناسایی گره‌ های دو سوی برش کمینه" mermaidId="n:G" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="شناسایی گره‌های دو سوی برش کمینه" id="0iJB6Y-VVY_jcuwcY-rq-13">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-10" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="255" x="35" y="435" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="تولید ماتریس باینری ماسک کنش M" mermaidId="n:H" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="تولید ماتریس باینری ماسک کنش M" id="0iJB6Y-VVY_jcuwcY-rq-14">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-10" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="248" x="193" y="564" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="انفجار ترافیک Flash Crowd&#xa;d &lt;= c(S,T)" mermaidId="e:E-&gt;F#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.9;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="انفجار ترافیک Flash Crowd&#xa;d &lt;= c(S,T)" id="0iJB6Y-VVY_jcuwcY-rq-15">
+          <mxCell edge="1" parent="0iJB6Y-VVY_jcuwcY-rq-10" source="0iJB6Y-VVY_jcuwcY-rq-11" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.9;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="0iJB6Y-VVY_jcuwcY-rq-12">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="471" y="391" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="قطع فیبر نوری Fiber Cut&#xa;d &gt; c(S,T)" mermaidId="e:E-&gt;G#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.1;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="قطع فیبر نوری Fiber Cut&#xa;d &gt; c(S,T)" id="0iJB6Y-VVY_jcuwcY-rq-16">
+          <mxCell edge="1" parent="0iJB6Y-VVY_jcuwcY-rq-10" source="0iJB6Y-VVY_jcuwcY-rq-11" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.1;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="0iJB6Y-VVY_jcuwcY-rq-13">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="162" y="391" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:F-&gt;H#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.82;entryY=0;" mermaidBaseValue="" id="0iJB6Y-VVY_jcuwcY-rq-17">
+          <mxCell edge="1" parent="0iJB6Y-VVY_jcuwcY-rq-10" source="0iJB6Y-VVY_jcuwcY-rq-12" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.82;entryY=0;rounded=0;" target="0iJB6Y-VVY_jcuwcY-rq-14">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="471" y="514" />
+                <mxPoint x="471" y="539" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:G-&gt;H#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.18;entryY=0;" mermaidBaseValue="" id="0iJB6Y-VVY_jcuwcY-rq-18">
+          <mxCell edge="1" parent="0iJB6Y-VVY_jcuwcY-rq-10" source="0iJB6Y-VVY_jcuwcY-rq-13" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.18;entryY=0;rounded=0;" target="0iJB6Y-VVY_jcuwcY-rq-14">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="162" y="514" />
+                <mxPoint x="162" y="539" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="لایه ۳: تصمیم‌ گیری هوشمند مقید - DRL Agent" mermaidId="n:Layer3" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="لایه ۳: تصمیم‌گیری هوشمند مقید - DRL Agent" id="0iJB6Y-VVY_jcuwcY-rq-19">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-1" style="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="357" width="435" x="240" y="1472" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="عامل هوشمند PPO&lt;div&gt;&amp;nbsp;خروجی توزیع احتمال اکشن‌ ها&lt;/div&gt;" mermaidId="n:I" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="عامل هوشمند PPO: خروجی توزیع احتمال اکشن‌ها" id="0iJB6Y-VVY_jcuwcY-rq-20">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-19" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="330" x="42" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="اعمال فیلتر ضرب عنصری Element-wise Product" mermaidId="n:J" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="اعمال فیلتر ضرب عنصری Element-wise Product" id="0iJB6Y-VVY_jcuwcY-rq-21">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-19" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="365" x="35" y="174" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="اکشن تعدیل‌ شده و ۱۰۰٪ امن مسیریابی مجدد" mermaidId="n:K" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="اکشن تعدیل‌شده و ۱۰۰٪ امن مسیریابی مجدد" id="0iJB6Y-VVY_jcuwcY-rq-22">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-19" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="293" x="71" y="278" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:I-&gt;J#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.48;entryY=0;" mermaidBaseValue="" id="0iJB6Y-VVY_jcuwcY-rq-23">
+          <mxCell edge="1" parent="0iJB6Y-VVY_jcuwcY-rq-19" source="0iJB6Y-VVY_jcuwcY-rq-20" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.48;entryY=0;rounded=0;" target="0iJB6Y-VVY_jcuwcY-rq-21">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="207" y="124" />
+                <mxPoint x="207" y="149" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:J-&gt;K#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="0iJB6Y-VVY_jcuwcY-rq-24">
+          <mxCell edge="1" parent="0iJB6Y-VVY_jcuwcY-rq-19" source="0iJB6Y-VVY_jcuwcY-rq-21" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="0iJB6Y-VVY_jcuwcY-rq-22">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="مرجع: Gusfield 1990" mermaidId="n:note1" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="مرجع: Gusfield 1990" id="0iJB6Y-VVY_jcuwcY-rq-25">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-1" style="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="198" x="503.5" y="116" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="مرجع : Schulman et al. 2017 PPO" mermaidId="n:note2" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="مرجع: Schulman et al. 2017 PPO" id="0iJB6Y-VVY_jcuwcY-rq-26">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-1" style="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;align=center;" vertex="1">
+            <mxGeometry height="54" width="284" x="751.5" y="116" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="مرجع: ETSI TS 128 100 لایه خودترمیمی" mermaidId="n:note3" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="مرجع: ETSI TS 128 100 لایه خودترمیمی" id="0iJB6Y-VVY_jcuwcY-rq-27">
+          <mxCell parent="0iJB6Y-VVY_jcuwcY-rq-1" style="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="299" x="1085.5" y="116" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:D-&gt;E#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="0iJB6Y-VVY_jcuwcY-rq-28">
+          <mxCell edge="1" parent="0iJB6Y-VVY_jcuwcY-rq-1" source="0iJB6Y-VVY_jcuwcY-rq-6" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="0iJB6Y-VVY_jcuwcY-rq-11">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:H-&gt;J#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.64;entryY=0;" mermaidBaseValue="" id="0iJB6Y-VVY_jcuwcY-rq-29">
+          <mxCell edge="1" parent="0iJB6Y-VVY_jcuwcY-rq-1" source="0iJB6Y-VVY_jcuwcY-rq-14" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.64;entryY=0;rounded=0;" target="0iJB6Y-VVY_jcuwcY-rq-21">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="960" y="1464" />
+                <mxPoint x="768" y="1536" />
+                <mxPoint x="624" y="1608" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

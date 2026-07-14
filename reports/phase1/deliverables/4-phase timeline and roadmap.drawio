@@ -1,0 +1,134 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="FqbUz09znjANSbQyZv3g">
+    <mxGraphModel dx="662" dy="877" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&#xa;  &quot;data&quot;: &quot;graph LR\n    %% تعریف استایل‌ها برای جلوه بصری عالی در draw.io\n    classDef phase1Style fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000;\n    classDef phase2Style fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000;\n    classDef phase3Style fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#000;\n    classDef phase4Style fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#000;\n    classDef milestoneStyle fill:#f5f5f5,stroke:#212121,stroke-width:2px,stroke-dasharray: 5 5,color:#000;\n\n    subgraph P1 [فاز ۱: زیرساخت، استانداردهای O-RAN و معماری قطعی — روز ۱ تا ۹۰]\n        P1_Task[مرور اسناد پنج‌گانه + &lt;br&gt; طراحی ۱۲ دیاگرام ساختاری + &lt;br&gt; توسعه پایه درخت Gomory-Hu]:::phase1Style\n        P1_Milestone((M1: تحویل مستندات &lt;br&gt; و تایید فاز ۱ گرنت)):::milestoneStyle\n        P1_Task --&gt; P1_Milestone\n    end\n\n    subgraph P2 [فاز ۲: توسعه محیط شبیه‌ساز شبیه‌به Gymnasium و خط لوله GNN — روز ۹۱ تا ۱۸۰]\n        P2_Task[فرمول‌بندی فضای MDP + &lt;br&gt; شبیه‌سازی ترافیک فرمت NWDAF + &lt;br&gt; کدنویسی لایه‌های پیام‌رسان GraphSAGE]:::phase2Style\n        P2_Milestone((M2: خروجی محیط پایدار &lt;br&gt; + سابمیت مقاله کنفرانسی)):::milestoneStyle\n        P1_Milestone ==&gt; P2_Task\n        P2_Task --&gt; P2_Milestone\n    end\n\n    subgraph P3 [فاز ۳: آموزش عامل هوشمند PPO و مانیتورینگ همگرایی — روز ۱۸۱ تا ۲۷۰]\n        P3_Task[پیاده‌سازی الگوریتم پویای PPO + &lt;br&gt; اعمال اکشن ماسکینگ ایمن + &lt;br&gt; لاگ‌گیری در پلتفرم های W&amp;B / TensorBoard]:::phase3Style\n        P3_Milestone((M3: همگرایی پاداش تجمعی &lt;br&gt; و تست پایداری شبکه)):::milestoneStyle\n        P2_Milestone ==&gt; P3_Task\n        P3_Task --&gt; P3_Milestone\n    end\n\n    subgraph P4 [فاز ۴: داشبورد MVP، بنچمارک روی SNDlib و دفاع — روز ۲۷۱ تا ۳۶۰]\n        P4_Task[توسعه داشبورد با Streamlit + &lt;br&gt; ارزیابی خروجی‌ها روی شبکه‌های Abilene/GÉANT + &lt;br&gt; نگارش نهایی تز دکتری/ارشد و مقاله Q1]:::phase4Style\n        P4_Milestone((M4: دفاع نهایی دانشگاه &lt;br&gt; + تحویل کدهای xApp)):::milestoneStyle\n        P3_Milestone ==&gt; P4_Task\n        P4_Task --&gt; P4_Milestone\n    end\n\n    %% لایه اتصالات به ساختار حاکمیتی گرنت همراه اول\n    note1[خروجی کانال دانشگاه: پایان‌نامه و مقالات Q1/Q2] .-&gt; P4_Task\n    note2[خروجی کانال صنعت: کدهای مستند گیت‌هاب و کاهش شاخص CapEx] .-&gt; P4_Milestone&quot;,&#xa;  &quot;config&quot;: null&#xa;}" id="Bd9CY8LN-4GJ90iGrAGL-1">
+          <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=20;" vertex="1">
+            <mxGeometry height="440" width="2680" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="فاز ۱: زیرساخت، استانداردهای&amp;nbsp;&lt;div&gt;O-RAN و معماری قطعی&amp;nbsp;&lt;/div&gt;&lt;div&gt;&quot;پانزدهم اردیبهشت الی پانزدهم تیر ماه&quot;&lt;/div&gt;" mermaidId="n:P1" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="فاز ۱: زیرساخت، استانداردهای O-RAN و معماری قطعی — روز ۱ تا ۹۰" id="Bd9CY8LN-4GJ90iGrAGL-2">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-1" style="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="209" width="595" x="104" y="61" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="مرور اسناد پنج‌گانه +&#xa;طراحی ۱۲ دیاگرام ساختاری +&#xa;توسعه پایه درخت Gomory-Hu" mermaidId="n:P1_Task" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e1f5fe;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="مرور اسناد پنج‌گانه +&#xa;طراحی ۱۲ دیاگرام ساختاری +&#xa;توسعه پایه درخت Gomory-Hu" id="Bd9CY8LN-4GJ90iGrAGL-3">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-2" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e1f5fe;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="93" width="237" x="35" y="68" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="M1: تحویل مستندات&#xa;و تایید فاز ۱ گرنت" mermaidId="n:P1_Milestone" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#212121;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;dashed=1;dashPattern=5 5;fixDash=1;" mermaidBaseValue="M1: تحویل مستندات&#xa;و تایید فاز ۱ گرنت" id="Bd9CY8LN-4GJ90iGrAGL-4">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-2" style="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#212121;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;dashed=1;dashPattern=5 5;fixDash=1;" vertex="1">
+            <mxGeometry height="139" width="139" x="421" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:P1_Task-&gt;P1_Milestone#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.49;entryX=0;entryY=0.5;" mermaidBaseValue="" id="Bd9CY8LN-4GJ90iGrAGL-5">
+          <mxCell edge="1" parent="Bd9CY8LN-4GJ90iGrAGL-2" source="Bd9CY8LN-4GJ90iGrAGL-3" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.49;entryX=0;entryY=0.5;rounded=0;" target="Bd9CY8LN-4GJ90iGrAGL-4">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="فاز ۲: توسعه محیط شبیه‌ساز شبیه‌به&lt;div&gt;&amp;nbsp;Gymnasium و خط لوله GNN&amp;nbsp;&lt;/div&gt;" mermaidId="n:P2" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="فاز ۲: توسعه محیط شبیه‌ساز شبیه‌به Gymnasium و خط لوله GNN — روز ۹۱ تا ۱۸۰" id="Bd9CY8LN-4GJ90iGrAGL-6">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-1" style="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="237" width="570" x="750" y="167" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="فرمول‌ بندی فضای MDP +&lt;br&gt;شبیه‌ سازی ترافیک فرمت NWDAF +&lt;br&gt;کدنویسی لایه‌ های پیام‌ رسان GraphSAGE" mermaidId="n:P2_Task" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="فرمول‌بندی فضای MDP +&#xa;شبیه‌سازی ترافیک فرمت NWDAF +&#xa;کدنویسی لایه‌های پیام‌رسان GraphSAGE" id="Bd9CY8LN-4GJ90iGrAGL-7">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-6" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="93" width="283" x="35" y="82" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="M2: خروجی محیط پایدار&#xa;+ سابمیت مقاله کنفرانسی" mermaidId="n:P2_Milestone" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#212121;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;dashed=1;dashPattern=5 5;fixDash=1;" mermaidBaseValue="M2: خروجی محیط پایدار&#xa;+ سابمیت مقاله کنفرانسی" id="Bd9CY8LN-4GJ90iGrAGL-8">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-6" style="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#212121;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;dashed=1;dashPattern=5 5;fixDash=1;" vertex="1">
+            <mxGeometry height="167" width="167" x="368" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:P2_Task-&gt;P2_Milestone#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.49;entryX=0;entryY=0.5;" mermaidBaseValue="" id="Bd9CY8LN-4GJ90iGrAGL-9">
+          <mxCell edge="1" parent="Bd9CY8LN-4GJ90iGrAGL-6" source="Bd9CY8LN-4GJ90iGrAGL-7" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.49;entryX=0;entryY=0.5;rounded=0;" target="Bd9CY8LN-4GJ90iGrAGL-8">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="فاز ۳: آموزش عامل هوشمند&amp;nbsp;&lt;div&gt;PPO و مانیتورینگ همگرایی&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" mermaidId="n:P3" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="فاز ۳: آموزش عامل هوشمند PPO و مانیتورینگ همگرایی — روز ۱۸۱ تا ۲۷۰" id="Bd9CY8LN-4GJ90iGrAGL-10">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-1" style="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="250" width="631" x="1329" y="40" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="پیاده‌ سازی الگوریتم پویای PPO +&lt;br&gt;اعمال اکشن ماسکینگ ایمن +&lt;br&gt;لاگ‌ گیری در پلتفرم های W&amp;amp;B / TensorBoard" mermaidId="n:P3_Task" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="پیاده‌سازی الگوریتم پویای PPO +&#xa;اعمال اکشن ماسکینگ ایمن +&#xa;لاگ‌گیری در پلتفرم های W&amp;B / TensorBoard" id="Bd9CY8LN-4GJ90iGrAGL-11">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-10" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="93" width="331" x="35" y="89" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="M3: همگرایی پاداش تجمعی&#xa;و تست پایداری شبکه" mermaidId="n:P3_Milestone" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#212121;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;dashed=1;dashPattern=5 5;fixDash=1;" mermaidBaseValue="M3: همگرایی پاداش تجمعی&#xa;و تست پایداری شبکه" id="Bd9CY8LN-4GJ90iGrAGL-12">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-10" style="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#212121;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;dashed=1;dashPattern=5 5;fixDash=1;" vertex="1">
+            <mxGeometry height="180" width="180" x="416" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:P3_Task-&gt;P3_Milestone#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.49;entryX=0;entryY=0.5;" mermaidBaseValue="" id="Bd9CY8LN-4GJ90iGrAGL-13">
+          <mxCell edge="1" parent="Bd9CY8LN-4GJ90iGrAGL-10" source="Bd9CY8LN-4GJ90iGrAGL-11" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.49;entryX=0;entryY=0.5;rounded=0;" target="Bd9CY8LN-4GJ90iGrAGL-12">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="فاز ۴: داشبورد&lt;div&gt;&amp;nbsp;MVP، بنچمارک روی SNDlib و دفاع&amp;nbsp;&lt;/div&gt;" mermaidId="n:P4" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="فاز ۴: داشبورد MVP، بنچمارک روی SNDlib و دفاع — روز ۲۷۱ تا ۳۶۰" id="Bd9CY8LN-4GJ90iGrAGL-14">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-1" style="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="253" width="670" x="1990" y="167" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="توسعه داشبورد با Streamlit +&lt;br&gt;ارزیابی خروجی‌ ها روی شبکه‌ های&amp;nbsp;&lt;div&gt;Abilene/GÉANT +&lt;br&gt;نگارش نهایی پایان نامه ارشد&amp;nbsp;&lt;/div&gt;" mermaidId="n:P4_Task" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="توسعه داشبورد با Streamlit +&#xa;ارزیابی خروجی‌ها روی شبکه‌های Abilene/GÉANT +&#xa;نگارش نهایی تز دکتری/ارشد و مقاله Q1" id="Bd9CY8LN-4GJ90iGrAGL-15">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-14" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="103.65198237885463" width="381.8167701863354" x="36.41304347826087" y="85.81938325991189" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="M4: دفاع نهایی دانشگاه&#xa;+ تحویل کدهای xApp" mermaidId="n:P4_Milestone" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#212121;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;dashed=1;dashPattern=5 5;fixDash=1;" mermaidBaseValue="M4: دفاع نهایی دانشگاه&#xa;+ تحویل کدهای xApp" id="Bd9CY8LN-4GJ90iGrAGL-16">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-14" style="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#212121;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;dashed=1;dashPattern=5 5;fixDash=1;" vertex="1">
+            <mxGeometry height="163.3385093167702" width="163.3385093167702" x="470.24844720496895" y="50.15418502202643" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:P4_Task-&gt;P4_Milestone#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.49;entryX=0;entryY=0.5;" mermaidBaseValue="" id="Bd9CY8LN-4GJ90iGrAGL-17">
+          <mxCell edge="1" parent="Bd9CY8LN-4GJ90iGrAGL-14" source="Bd9CY8LN-4GJ90iGrAGL-15" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.49;entryX=0;entryY=0.5;rounded=0;" target="Bd9CY8LN-4GJ90iGrAGL-16">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="خروجی کانال دانشگاه: پایان‌نامه&amp;nbsp;" mermaidId="n:note1" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="خروجی کانال دانشگاه: پایان‌نامه و مقالات Q1/Q2" id="Bd9CY8LN-4GJ90iGrAGL-18">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-1" style="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="71" width="230" x="130" y="279" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="خروجی کانال صنعت: کدهای مستند گیت‌هاب و کاهش شاخص&amp;nbsp;&lt;div&gt;CapEx&lt;/div&gt;" mermaidId="n:note2" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="خروجی کانال صنعت: کدهای مستند گیت‌هاب و کاهش شاخص CapEx" id="Bd9CY8LN-4GJ90iGrAGL-19">
+          <mxCell parent="Bd9CY8LN-4GJ90iGrAGL-1" style="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="74" width="359" x="370" y="330" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:P1_Milestone-&gt;P2_Task#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeWidth=3.5;endSize=3;startSize=3;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.49;" mermaidBaseValue="" id="Bd9CY8LN-4GJ90iGrAGL-20">
+          <mxCell edge="1" parent="Bd9CY8LN-4GJ90iGrAGL-1" source="Bd9CY8LN-4GJ90iGrAGL-4" style="curved=1;startArrow=none;endArrow=block;endSize=3;strokeWidth=3.5;startSize=3;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.49;rounded=0;" target="Bd9CY8LN-4GJ90iGrAGL-7">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:P2_Milestone-&gt;P3_Task#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeWidth=3.5;endSize=3;startSize=3;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.49;" mermaidBaseValue="" id="Bd9CY8LN-4GJ90iGrAGL-21">
+          <mxCell edge="1" parent="Bd9CY8LN-4GJ90iGrAGL-1" source="Bd9CY8LN-4GJ90iGrAGL-8" style="curved=1;startArrow=none;endArrow=block;endSize=3;strokeWidth=3.5;startSize=3;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.49;rounded=0;" target="Bd9CY8LN-4GJ90iGrAGL-11">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:P3_Milestone-&gt;P4_Task#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeWidth=3.5;endSize=3;startSize=3;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.49;" mermaidBaseValue="" id="Bd9CY8LN-4GJ90iGrAGL-22">
+          <mxCell edge="1" parent="Bd9CY8LN-4GJ90iGrAGL-1" source="Bd9CY8LN-4GJ90iGrAGL-12" style="curved=1;startArrow=none;endArrow=block;endSize=3;strokeWidth=3.5;startSize=3;strokeColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.5;entryX=0;entryY=0.49;rounded=0;" target="Bd9CY8LN-4GJ90iGrAGL-15">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

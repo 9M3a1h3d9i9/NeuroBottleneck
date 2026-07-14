@@ -1,0 +1,213 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="dG_h4k6aUU6yBEFb9j0V">
+    <mxGraphModel dx="1251" dy="698" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&#xa;  &quot;data&quot;: &quot;graph TD\n    %% تعریف استایل‌های هماهنگ با سند قبلی برای draw.io\n    classDef inputStyle fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000;\n    classDef customStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#000;\n    classDef aggStyle fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000;\n    classDef outputStyle fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#000;\n\n    subgraph Step1 [گام ۱: دریافت گراف توپولوژی و نمونه‌برداری یکنواخت]\n        A[گراف پویای شبکه همراه اول G=V,E]:::inputStyle --&gt; B[انتخاب گره هدف Target Node v]:::inputStyle\n        B --&gt; C[نمونه‌برداری تصادفی یکنواخت با اندازه ثابت S_k از همسایگان N_v]:::inputStyle\n    end\n\n    subgraph Step2 [گام ۲: لایه ابداعی تزریق ویژگی‌های دترمینستیک ریاضی]\n        D1[تله‌متری خام شبکه: نرخ ترافیک و ظرفیت لینک]:::customStyle --&gt; E[عملگر الحاق برداری Concatenation ||]:::customStyle\n        D2[خروجی درخت گوموری-هو: موقعیت برش کمینه Min-Cut]:::customStyle --&gt; E\n        D3[تحلیل الگوریتم پیکارد: شاخص Link Betweenness]:::customStyle --&gt; E\n        E --&gt; F[ماتریس ویژگی‌های غنی‌شده گره‌ها X_u]:::customStyle\n    end\n\n    subgraph Step3 [گام ۳: خط لوله تجمیع اطلاعات همسایگی - Aggregation]\n        C --&gt; G[جمع‌آوری بردارهای ویژگی همسایگان نمونه‌برداری‌شده u ∈ N_v]:::aggStyle\n        F --&gt; G\n        G --&gt; H[توابع لایه پیش‌رو MLP + فعال‌ساز ReLU]:::aggStyle\n        H --&gt; I[عملگر تجمیع بیشینه Max-Pooling Aggregator]:::aggStyle\n    end\n\n    subgraph Step4 [گام ۴: به‌روزرسانی امبدینگ استقرایی لایه k]\n        I --&gt; J[الحاق برداری امبدینگ قبلی گره هدف h_v^k-1 با بردار تجمیع همسایگان]:::outputStyle\n        J --&gt; K[ضرب در ماتریس وزن‌های قابل یادگیری W_k]:::outputStyle\n        K --&gt; L[بردارهای امبدینگ متراکم کم‌بعد h_v^k &lt;br&gt; خوراک ورودی عامل DRL PPO]:::outputStyle\n    end\n\n    %% بخش پانویس ارتباط با مراجع علمی پروژه\n    note1[مرجع: Hamilton et al. 2017 GraphSAGE] .- C\n    note2[مرجع: Paul Almasan 2022 تزریق ویژگی ساختاری] .- D3\n    note3[نوآوری بومی: ادغام هندسه دترمینستیک در امبدینگ پویا] .- E&quot;,&#xa;  &quot;config&quot;: null&#xa;}" id="5zSRcIpd4wFBkASq1PZM-1">
+          <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=20;" vertex="1">
+            <mxGeometry height="600" width="1946" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="گام ۱: دریافت گراف توپولوژی و نمونه‌ برداری یکنواخت" mermaidId="n:Step1" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="گام ۱: دریافت گراف توپولوژی و نمونه‌برداری یکنواخت" id="5zSRcIpd4wFBkASq1PZM-2">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-1" style="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="370" width="496" x="1430" y="210" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="گراف پویای شبکه همراه اول G=V,E" mermaidId="n:A" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e1f5fe;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="گراف پویای شبکه همراه اول G=V,E" id="5zSRcIpd4wFBkASq1PZM-3">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-2" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e1f5fe;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="60.18072289156627" width="258" x="119" y="50.15060240963856" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="انتخاب گره هدف Target Node v" mermaidId="n:B" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e1f5fe;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="انتخاب گره هدف Target Node v" id="5zSRcIpd4wFBkASq1PZM-4">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-2" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e1f5fe;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="60.18072289156627" width="252" x="122" y="166.0542168674699" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="نمونه‌ برداری تصادفی یکنواخت با اندازه ثابت&lt;div&gt;&amp;nbsp;S&lt;span style=&quot;font-size: 13.3333px;&quot;&gt;k&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;از همسایگان&amp;nbsp;&lt;/div&gt;&lt;div&gt;N&lt;span style=&quot;font-size: 13.3333px;&quot;&gt;v&lt;/span&gt;&lt;/div&gt;" mermaidId="n:C" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e1f5fe;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="نمونه‌برداری تصادفی یکنواخت با اندازه ثابت S_k از همسایگان N_v" id="5zSRcIpd4wFBkASq1PZM-5">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-2" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e1f5fe;strokeColor=#0288d1;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="74.66867469879519" width="426" x="35" y="281.95783132530124" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:A-&gt;B#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="5zSRcIpd4wFBkASq1PZM-6">
+          <mxCell edge="1" parent="5zSRcIpd4wFBkASq1PZM-2" source="5zSRcIpd4wFBkASq1PZM-3" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="5zSRcIpd4wFBkASq1PZM-4">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:B-&gt;C#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="5zSRcIpd4wFBkASq1PZM-7">
+          <mxCell edge="1" parent="5zSRcIpd4wFBkASq1PZM-2" source="5zSRcIpd4wFBkASq1PZM-4" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="5zSRcIpd4wFBkASq1PZM-5">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="گام ۲: لایه ابداعی تزریق ویژگی‌ های دترمینستیک ریاضی" mermaidId="n:Step2" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="گام ۲: لایه ابداعی تزریق ویژگی‌های دترمینستیک ریاضی" id="5zSRcIpd4wFBkASq1PZM-8">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-1" style="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="332" width="1217" x="170" y="210" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="تله‌ متری خام شبکه: نرخ ترافیک و ظرفیت لینک" mermaidId="n:D1" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="تله‌متری خام شبکه: نرخ ترافیک و ظرفیت لینک" id="5zSRcIpd4wFBkASq1PZM-9">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-8" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="314" x="868" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="عملگر الحاق برداری Concatenation ||" mermaidId="n:E" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="عملگر الحاق برداری Concatenation ||" id="5zSRcIpd4wFBkASq1PZM-10">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-8" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="300" x="479" y="149" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="خروجی درخت گوموری-هو: موقعیت برش کمینه Min-Cut" mermaidId="n:D2" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="خروجی درخت گوموری-هو: موقعیت برش کمینه Min-Cut" id="5zSRcIpd4wFBkASq1PZM-11">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-8" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="379" x="439" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="تحلیل الگوریتم پیکارد: شاخص Link Betweenness" mermaidId="n:D3" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="تحلیل الگوریتم پیکارد: شاخص Link Betweenness" id="5zSRcIpd4wFBkASq1PZM-12">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-8" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="354" x="35" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ماتریس ویژگی‌های غنی‌ شده گره‌ها X&lt;sub&gt;u&lt;/sub&gt;" mermaidId="n:F" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="ماتریس ویژگی‌های غنی‌شده گره‌ها X_u" id="5zSRcIpd4wFBkASq1PZM-13">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-8" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e8f5e9;strokeColor=#2e7d32;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="269" x="494" y="253" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:D1-&gt;E#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=1;entryY=0.13;" mermaidBaseValue="" id="5zSRcIpd4wFBkASq1PZM-14">
+          <mxCell edge="1" parent="5zSRcIpd4wFBkASq1PZM-8" source="5zSRcIpd4wFBkASq1PZM-9" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=1;entryY=0.13;rounded=0;" target="5zSRcIpd4wFBkASq1PZM-10">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1025" y="124" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:D2-&gt;E#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="5zSRcIpd4wFBkASq1PZM-15">
+          <mxCell edge="1" parent="5zSRcIpd4wFBkASq1PZM-8" source="5zSRcIpd4wFBkASq1PZM-11" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="5zSRcIpd4wFBkASq1PZM-10">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:D3-&gt;E#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0;entryY=0.15;" mermaidBaseValue="" id="5zSRcIpd4wFBkASq1PZM-16">
+          <mxCell edge="1" parent="5zSRcIpd4wFBkASq1PZM-8" source="5zSRcIpd4wFBkASq1PZM-12" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0;entryY=0.15;rounded=0;" target="5zSRcIpd4wFBkASq1PZM-10">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="212" y="124" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:E-&gt;F#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="5zSRcIpd4wFBkASq1PZM-17">
+          <mxCell edge="1" parent="5zSRcIpd4wFBkASq1PZM-8" source="5zSRcIpd4wFBkASq1PZM-10" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="5zSRcIpd4wFBkASq1PZM-13">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="گام ۳: خط لوله تجمیع اطلاعات همسایگی - Aggregation" mermaidId="n:Step3" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="گام ۳: خط لوله تجمیع اطلاعات همسایگی - Aggregation" id="5zSRcIpd4wFBkASq1PZM-18">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-1" style="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="332" width="477" x="813.5" y="590" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="جمع‌آوری بردارهای ویژگی همسایگان نمونه‌ برداری‌شده u ∈ N&lt;sub&gt;v&lt;/sub&gt;" mermaidId="n:G" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="جمع‌آوری بردارهای ویژگی همسایگان نمونه‌برداری‌شده u ∈ N_v" id="5zSRcIpd4wFBkASq1PZM-19">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-18" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;align=center;" vertex="1">
+            <mxGeometry height="54" width="407" x="35" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="توابع لایه پیش‌رو MLP + فعال‌ساز ReLU" mermaidId="n:H" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="توابع لایه پیش‌رو MLP + فعال‌ساز ReLU" id="5zSRcIpd4wFBkASq1PZM-20">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-18" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="283" x="97" y="149" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="عملگر تجمیع بیشینه Max-Pooling Aggregator" mermaidId="n:I" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="عملگر تجمیع بیشینه Max-Pooling Aggregator" id="5zSRcIpd4wFBkASq1PZM-21">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-18" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#fff3e0;strokeColor=#f57c00;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="335" x="71" y="253" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:G-&gt;H#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="5zSRcIpd4wFBkASq1PZM-22">
+          <mxCell edge="1" parent="5zSRcIpd4wFBkASq1PZM-18" source="5zSRcIpd4wFBkASq1PZM-19" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="5zSRcIpd4wFBkASq1PZM-20">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:H-&gt;I#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="5zSRcIpd4wFBkASq1PZM-23">
+          <mxCell edge="1" parent="5zSRcIpd4wFBkASq1PZM-18" source="5zSRcIpd4wFBkASq1PZM-20" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="5zSRcIpd4wFBkASq1PZM-21">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="گام ۴: به‌روزرسانی امبدینگ استقرایی لایه k" mermaidId="n:Step4" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="گام ۴: به‌روزرسانی امبدینگ استقرایی لایه k" id="5zSRcIpd4wFBkASq1PZM-24">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-1" style="html=1;whiteSpace=wrap;strokeWidth=1;verticalAlign=top;fillColor=light-dark(#ffffde,#1f2020);strokeColor=light-dark(#aaaa33,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="351" width="522" x="791" y="960" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="الحاق برداری امبدینگ قبلی گره هدف h&lt;sub&gt;v&lt;/sub&gt;^k-1 با بردار تجمیع همسایگان" mermaidId="n:J" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="الحاق برداری امبدینگ قبلی گره هدف h_v^k-1 با بردار تجمیع همسایگان" id="5zSRcIpd4wFBkASq1PZM-25">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-24" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="452" x="35" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ضرب در ماتریس وزن‌ های قابل یادگیری W_k" mermaidId="n:K" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="ضرب در ماتریس وزن‌های قابل یادگیری W_k" id="5zSRcIpd4wFBkASq1PZM-26">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-24" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="309" x="106" y="149" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="بردارهای امبدینگ متراکم کم‌ بعد h&lt;sub&gt;v&lt;/sub&gt;^k&lt;br&gt;خوراک ورودی عامل DRL PPO" mermaidId="n:L" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="بردارهای امبدینگ متراکم کم‌بعد h_v^k&#xa;خوراک ورودی عامل DRL PPO" id="5zSRcIpd4wFBkASq1PZM-27">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-24" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#ffebee;strokeColor=#c62828;fontColor=default;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="73" width="272" x="125" y="253" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:J-&gt;K#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="5zSRcIpd4wFBkASq1PZM-28">
+          <mxCell edge="1" parent="5zSRcIpd4wFBkASq1PZM-24" source="5zSRcIpd4wFBkASq1PZM-25" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="5zSRcIpd4wFBkASq1PZM-26">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:K-&gt;L#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="5zSRcIpd4wFBkASq1PZM-29">
+          <mxCell edge="1" parent="5zSRcIpd4wFBkASq1PZM-24" source="5zSRcIpd4wFBkASq1PZM-26" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="5zSRcIpd4wFBkASq1PZM-27">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="&amp;nbsp;Hamilton et al. 2017 GraphSAGE" mermaidId="n:note1" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="مرجع: Hamilton et al. 2017 GraphSAGE" id="5zSRcIpd4wFBkASq1PZM-30">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-1" style="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="332" x="571" y="85" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&amp;nbsp;Paul Almasan 2022 تزریق ویژگی ساختاری" mermaidId="n:note2" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="مرجع: Paul Almasan 2022 تزریق ویژگی ساختاری" id="5zSRcIpd4wFBkASq1PZM-31">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-1" style="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="360" x="953" y="85" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;نوآوری بومی:&lt;/font&gt;&lt;/b&gt; ادغام هندسه دترمینستیک در امبدینگ پویا" mermaidId="n:note3" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="نوآوری بومی: ادغام هندسه دترمینستیک در امبدینگ پویا" id="5zSRcIpd4wFBkASq1PZM-32">
+          <mxCell parent="5zSRcIpd4wFBkASq1PZM-1" style="html=1;whiteSpace=wrap;strokeWidth=1;fillColor=light-dark(#ECECFF,#1f2020);strokeColor=light-dark(#9370DB,#cccccc);fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="54" width="358" x="1363" y="85" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:I-&gt;J#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="5zSRcIpd4wFBkASq1PZM-35">
+          <mxCell edge="1" parent="5zSRcIpd4wFBkASq1PZM-1" source="5zSRcIpd4wFBkASq1PZM-21" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="5zSRcIpd4wFBkASq1PZM-25">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <mxCell id="5zSRcIpd4wFBkASq1PZM-37" edge="1" parent="5zSRcIpd4wFBkASq1PZM-1" source="5zSRcIpd4wFBkASq1PZM-13" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" target="5zSRcIpd4wFBkASq1PZM-19" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1540" y="630" as="sourcePoint" />
+            <mxPoint x="1590" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5zSRcIpd4wFBkASq1PZM-38" edge="1" parent="5zSRcIpd4wFBkASq1PZM-1" source="5zSRcIpd4wFBkASq1PZM-5" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="5zSRcIpd4wFBkASq1PZM-19" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1540" y="630" as="sourcePoint" />
+            <mxPoint x="1590" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
