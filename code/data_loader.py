@@ -31,7 +31,7 @@ class ORanDynamicPipeline:
             raise FileNotFoundError(f"Static topology file not found at {self.topo_file}")
 
         # Read the entire raw text of the SNDlib topology file
-        # خواندن سطر هایی
+        # خواندن دیتای خام
         with open(self.topo_file, 'r') as f:
             content = f.read()
 
@@ -41,6 +41,7 @@ class ORanDynamicPipeline:
         # NODES 
         # را شکار می‌کند
         nodes_match = re.search(r'NODES\s*\((.*?)\n\s*\)', content, re.DOTALL)
+        
         if nodes_match:
             for line in nodes_match.group(1).strip().split('\n'):
                 line = line.strip()
