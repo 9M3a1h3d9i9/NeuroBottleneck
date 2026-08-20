@@ -1,7 +1,12 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 import networkx as nx
 from topology_optimizer.gomory_hu import GomoryHuAnalyzer
 from topology_optimizer.picard_cuts import PicardCutAnalyzer
-
+# File of Code , one level upper than of action_macking folder,
+#  must be adding to python Path
 
 class ExactActionMask:
     def __init__(self, graph, gh_tree):
@@ -20,7 +25,8 @@ class ExactActionMask:
         return pair, min_weight
 
     def build_mask(self):
-        source, target, mincut = *self.get_weakest_pair(), None
+        # source, target, mincut = *self.get_weakest_pair(), None
+        
         # Actually get_weakest_pair returns (pair, weight); adjust:
         pair, mincut = self.get_weakest_pair()
         source, target = pair
