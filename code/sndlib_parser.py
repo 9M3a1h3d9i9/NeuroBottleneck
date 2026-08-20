@@ -1,63 +1,58 @@
-import re
-from pathlib import Path
 import networkx as nx
 
 
-def parse_sndlib_native(file_path: str = None) -> nx.Graph:
-    """
-    Parse an SNDlib native format file and return an undirected weighted graph.
-    Each link gets a 'capacity' attribute taken from the module capacity.
-    """
-    if file_path is None:
-        base = Path(__file__).resolve().parent.parent  # NeuroBottleneck
-        file_path = base / "data" / "sndlib" / "india35.txt" 
-    text = Path(file_path).read_text()
-
-    nodes_match = re.search(r'NODES\s*\((.*?)\)\n', text, re.DOTALL)
-    links_match = re.search(r'LINKS\s*\((.*?)\)\n', text, re.DOTALL)
-
-    if not nodes_match or not links_match:
-        raise ValueError("Could not find NODES or LINKS sections")
-
-    nodes_text = nodes_match.group(1)
-    links_text = links_match.group(1)
-
+def parse_sndlib(file_path):
     G = nx.Graph()
+    mode = None  # None, 'nodes', 'links'
 
-    # Add nodes if present
-    for line in nodes_text.strip().splitlines():
-        m = re.match(r'\s*(\d+)\s*\(', line)
-        if m:
-            G.add_node(int(m.group(1)))
+    with open(file_path, 'r') as f:
+        for line in f:
+            line = line.strip()
 
-    # Parse links
-    # Format: <id> ( <source> <target> ) <pre_cap> <pre_cost> <routing_cost> <setup_cost> ( <module_cap> <module_cost> ... )
-    for line in links_text.strip().splitlines():
-        m = re.match(
-            r'\s*(\d+)\s*\(\s*(\d+)\s+(\d+)\s*\)\s+'
-            r'([\d.]+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*'
-            r'\(\s*([\d.]+)',
-            line,
-        )
-        if m:
-            link_id = int(m.group(1))
-            source = int(m.group(2))
-            target = int(m.group(3))
-            pre_cap = float(m.group(4))
-            module_cap = float(m.group(8))
+            if line.startswith('NODES'):
+                mode = 'nodes'
+                continue
 
-            capacity = module_cap if pre_cap == 0.0 else pre_cap
-            G.add_edge(source, target, capacity=capacity, link_id=link_id)
-        else:
-            print(f"Warning: could not parse link line: {line.strip()}")
+            if line.startswith('LINKS'):
+                mode = 'links'
+                continue
+
+            if line.startswith('DEMANDS') or line.startswith('ADMISSIBLE_PATHS'):
+                mode = None
+                continue
+
+            if mode == 'nodes':
+                parts = line.split()
+                # node line: <node_id> ( <longitude> <latitude> )
+                if len(parts) >= 1 and parts[0].isdigit():
+                    node_id = int(parts[0])
+                    G.add_node(node_id)
+
+            elif mode == 'links':
+                parts = line.split()
+                # link line format:
+                # <id> ( <source> <target> ) <pre_cap> <pre_cost> <routing_cost> <setup_cost> ( <module_cap> <module_cost> )
+                # split gives:
+                # 0=id, 1='(', 2=source, 3=target, 4=')', 5=pre_cap, 6=pre_cost, 7=routing_cost, 8=setup_cost, 9='(', 10=module_cap
+                if len(parts) >= 11 and parts[0].isdigit() and parts[1] == '(' and parts[4] == ')':
+                    link_id = int(parts[0])
+                    source = int(parts[2])
+                    target = int(parts[3])
+
+                    pre_cap = float(parts[5])
+                    module_cap = float(parts[10])
+
+                    capacity = pre_cap if pre_cap > 0 else module_cap
+
+                    G.add_edge(source, target, capacity=capacity, link_id=link_id)
+                else:
+                    print(f"Skipped line (unexpected format): {line}")
 
     return G
 
 
 if __name__ == "__main__":
-    G = parse_sndlib_native()
-    # G = parse_sndlib_native("/home/mahdics313/NeuroBottleneck/data/sndlib/india35.txt")
-
+    G = parse_sndlib("data/sndlib/india35.txt")
     print(f"Nodes: {G.number_of_nodes()}")
     print(f"Edges: {G.number_of_edges()}")
     print(f"Is connected: {nx.is_connected(G)}")
