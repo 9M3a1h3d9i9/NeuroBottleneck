@@ -1,39 +1,99 @@
-# NeuroBottleneck: Intelligent Network Optimization Platform 
+# NeuroBottleneck
 
-## چشم‌انداز پروژه
-پلتفرم **NeuroBottleneck** با هدف خودگردانی هوشمند شبکه‌های مخابراتی مدرن طراحی شده است. این پروژه با تلفیق تئوری گراف (GNN) و یادگیری تقویت‌پذیر عمیق (DRL)، شناسایی و بهینه‌سازی گلوگاه‌های ترافیکی را در معماری‌های O-RAN به صورت بلادرنگ و تعمیم‌پذیر امکان‌پذیر می‌سازد. هدف نهایی، دستیابی به اتوماسیون سطح ۴ در مدیریت منابع شبکه است.
+> **Intelligent Network Optimization & Resilience** using graph learning and deep reinforcement learning.
 
----
+## Overview
 
-## نقشه راه پروژه (Phased RoadMap)
+NeuroBottleneck is a research-oriented platform for studying intelligent optimization of modern communication networks. The project investigates how **Graph Neural Networks (GNNs)** and **Deep Reinforcement Learning (DRL)** can work together to detect network bottlenecks and support adaptive optimization decisions.
 
-### 📍 فاز ۱: پایه نظری و معماری (در حال اجرا)
-این فاز به عنوان سنگ‌بنای پروژه NeuroBottleneck، بر ایجاد یک درک عمیق از معماری‌های خودگردان و تلفیق هوش مصنوعی در شبکه‌های نسل جدید (O-RAN) متمرکز بود. خروجی این فاز شامل استخراج دانش از استانداردها و مقالات مرجع، تحلیل شکاف‌های تحقیقاتی و طراحی یک ساختار ماژولار برای پیاده‌سازی است.
+## Research Problem
 
+Dynamic communication networks must continuously balance capacity, traffic demand, topology, and resilience. A key challenge is identifying critical bottlenecks and choosing optimization actions while the network state changes.
 
-#### هفته ۱ و ۲: آماده‌سازی محیط و جمع‌آوری منابع (بنیادی)
+NeuroBottleneck studies this problem through the following conceptual loop:
 
-روز ۱-۳: مقداردهی اولیه مخزن گیت‌هاب (Initialization)، تنظیم .gitignore و ساختار درختی پوشه‌ها.
-روز ۴-۷: پیکربندی محیط توسعه لینوکس، مدیریت مجازی‌سازی (Docker/Condi)، و نصب پیش‌نیازهای اولیه کتابخانه‌ها (requirements.txt).
-روز ۸-۱۱: جستجو، گزینش و دانلود مقالات مرجع (DRL, GNN, O-RAN Architecture) و مستندات استاندارد 3GPP/O-RAN-WG1.
-روز ۱۲-۱۴: سازماندهی اولیه پوشه‌های papers/ و notes/ و ایجاد فضای کاری برای تحلیل شکاف‌ها.
+```text
+Network State
+     ↓
+Graph Representation
+     ↓
+Bottleneck / Criticality Analysis
+     ↓
+DRL Agent
+     ↓
+Optimization Action
+     ↓
+Network KPI Evaluation
+     ↺
+```
 
-#### هفته ۳ و ۴: کارِ فشرده (تحلیل، معماری و پیاده‌سازی)
+## Research Themes
 
-روز ۱۵-۱۸ (سنتز علمی): مطالعه عمیق و تحلیل انتقادی ۵ منبع کلیدی. استخراج مفاهیم کلیدی الگوریتم‌های PPO و GraphSAGE و انتقال به فایل‌های تحلیل.
-روز ۱۹-۲۱ (مدیریت دانش): تدوین Gap Matrix (تحلیل شکاف‌های موجود در ادبیات تحقیق) و تثبیت اصطلاحات در Cumulative Vocabulary Table.
-روز ۲۲-۲۴ (مهندسی معماری): طراحی و پیاده‌سازی اسکلت ماژولار کد در code/؛ 
-روز ۲۵-۲۷ (مستندسازی نهایی): تدوین گزارش رسمی فاز ۱، طراحی دیاگرام‌های جریان داده (در diagrams/) و تکمیل چک‌لیست ۷۰ آیتمی ارزیابی کیفی.
-روز ۲۸ (Finalization): یکپارچه‌سازی نهایی مستندات در reports/phase-01/deliverables/، نهایی‌سازی README.md و آماده‌سازی مخزن جهت ارائه به منتور.
+- Network optimization
+- Bottleneck and critical-node analysis
+- Graph Neural Networks
+- Deep Reinforcement Learning
+- Network resilience
+- O-RAN-oriented intelligent networking
+- Adaptive resource optimization
 
-### فاز ۲: توسعه محیط و مدل‌سازی پایه
-*(جزئیات در ادامه پروژه و پس از تکمیل فاز ۱ تدوین می‌گردد)*
+## Development Status
 
-###  فاز ۳: یکپارچه‌سازی عامل و بهینه‌سازی
-*(جزئیات در ادامه پروژه تدوین می‌گردد)*
+**Active research project.**
 
-### فاز ۴: ارزیابی صنعتی و تحلیل نهایی
-*(جزئیات در ادامه پروژه تدوین می‌گردد)*
+The repository is being developed incrementally. Research hypotheses and planned architecture are intentionally separated from experimentally verified results.
 
----
-*توسعه‌یافته در محیط کاری NeuroBottleneck - جهت تحقیق و توسعه مخابراتی (همراه اول - MCI)*
+## Roadmap
+
+### Phase 1 — Research foundation
+
+- Literature and standards review
+- Problem formulation
+- Architecture design
+- Modular software foundation
+- Research documentation
+
+### Phase 2 — Environment and baseline models
+
+- Network simulation environment
+- Graph representation
+- Network KPI model
+- Bottleneck detection baseline
+- RL environment and baseline policies
+
+### Phase 3 — Intelligent optimization
+
+- GNN-based state representation
+- DRL optimization agent
+- Dynamic traffic scenarios
+- Resilience-aware reward design
+- Comparative experiments
+
+### Phase 4 — Evaluation
+
+- Baseline comparison
+- Ablation studies
+- Robustness analysis
+- Generalization across network topologies
+- Reproducible experiment artifacts
+
+## Research Integrity
+
+This repository does **not** claim performance numbers that have not been produced by an executed experiment. Final metrics will be added together with configuration, evaluation methodology, and reproducible artifacts.
+
+## Engineering Principles
+
+- Modular architecture
+- Reproducible experiments
+- Testable components
+- Explicit configuration
+- Research documentation
+- Conventional Git workflow
+
+## Long-Term Direction
+
+The long-term goal is to investigate practical **Network Intelligence** systems that connect graph-based representation learning with adaptive optimization for communication networks.
+
+## Author
+
+Mohammad Mahdi Shafighi — M.Sc. Artificial Intelligence
