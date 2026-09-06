@@ -34,7 +34,7 @@ Why did this happen? The environment is too simple and under-utilized.
 To force the network into critical conditions and reveal the effect of GH Mask, three changes are applied to `env_poc.py`:
 
 ### Change 1: Increase Base Traffic Load (Step 177)
-```python
+
 # Old: avg ~40%
 self.graph[u][v]['utilization'] = max(0.1, min(1.0, np.random.normal(0.4, 0.1)))
 
