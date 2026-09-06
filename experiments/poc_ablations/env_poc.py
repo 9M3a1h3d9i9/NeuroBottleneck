@@ -50,8 +50,8 @@ class NeuroBottleneckEnv(gym.Env):
         # -------------------------------------------------
         self.history = {'reward': [], 'violations': [], 'lambda_min': []}
         self.step_count = 0
-        self._gh_lambda_threshold = 1500  # آستانه بحرانی برای ماسک گوموری-هو
-        
+        self._gh_lambda_threshold = 1200  # آستانه بحرانی برای ماسک گوموری-هو
+        # از 1500 به 1200
         print(f"[ENV] Init complete. Use GNN: {use_gnn}, Obs Dim: {self.observation_space.shape[0]}")
 
     # --------------------------------------------------------------------
@@ -156,6 +156,14 @@ class NeuroBottleneckEnv(gym.Env):
             self.graph[u][v]['capacity'] = 2000
             self.graph[u][v]['utilization'] = np.random.uniform(0.2, 0.5)
             self.graph[u][v]['delay'] = np.random.randint(5, 25)
+        
+        # 🆕 تنش‌زایی: کاهش تصادفی ۲-۳ لینک به ۵۰۰-۸۰۰
+        import random
+        num_critical = min(3, len(self.edges))
+        critical_edges = random.sample(self.edges, num_critical)
+        for u, v in critical_edges:
+            self.graph[u][v]['capacity'] = random.randint(500, 800)
+        
         self.step_count = 0
         self.history = {'reward': [], 'violations': [], 'lambda_min': []}
         return self._get_obs(), {}
@@ -173,8 +181,10 @@ class NeuroBottleneckEnv(gym.Env):
         self.graph[u][v]['capacity'] = new_cap
         
         # شبیه‌سازی پویای ترافیک (تصادفی با نویز)
-        self.graph[u][v]['utilization'] = max(0.1, min(1.0, np.random.normal(0.4, 0.1)))
-        
+        # self.graph[u][v]['utilization'] = max(0.1, min(1.0, np.random.normal(0.4, 0.1)))
+        self.graph[u][v]['utilization'] = max(0.3, min(1.0, np.random.normal(0.75, 0.15)))
+
+
         # -------------------------------------------------
         # محاسبه پاداش (3 مؤلفه)
         # -------------------------------------------------
