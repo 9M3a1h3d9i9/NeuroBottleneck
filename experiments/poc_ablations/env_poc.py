@@ -156,7 +156,8 @@ class NeuroBottleneckEnv(gym.Env):
             self.graph[u][v]['capacity'] = 2000
             self.graph[u][v]['utilization'] = np.random.uniform(0.2, 0.5)
             self.graph[u][v]['delay'] = np.random.randint(5, 25)
-        
+
+        # تنش‌زایی: کاهش تصادفی ظرفیت برخی لینک‌ها
         # 🆕 تنش‌زایی: کاهش تصادفی ۲-۳ لینک به ۵۰۰-۸۰۰
         import random
         num_critical = min(3, len(self.edges))
@@ -182,6 +183,8 @@ class NeuroBottleneckEnv(gym.Env):
         
         # شبیه‌سازی پویای ترافیک (تصادفی با نویز)
         # self.graph[u][v]['utilization'] = max(0.1, min(1.0, np.random.normal(0.4, 0.1)))
+        
+        # شبیه‌سازی پویای ترافیک (بار بالا: میانگین ۷۵٪)
         self.graph[u][v]['utilization'] = max(0.3, min(1.0, np.random.normal(0.75, 0.15)))
 
 
