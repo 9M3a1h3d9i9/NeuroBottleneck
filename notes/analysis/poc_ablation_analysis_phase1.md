@@ -57,7 +57,7 @@ self._gh_lambda_threshold = 1200  # From 1500
 
 
 
-### 🎯 4. Expected Outcome
+###  4. Expected Outcome
 Scenario	Baseline	Neuro_Full	Conclusion
 No Stress (Previous)	~1.31	~1.31	❌ Not differentiable
 With Stress (New)	~0.8-1.0 (High violations)	~1.2-1.3 (Low violations)	✅ Novelty Proven!
@@ -65,7 +65,7 @@ With Stress (New)	~0.8-1.0 (High violations)	~1.2-1.3 (Low violations)	✅ Novel
 
 Reason: Under stress, Baseline will reduce critical links, causing λ_min to drop below 1200 and creating violations. Neuro_Full will block these actions via GH Mask, maintaining network stability.
 
-✅ 5. Next Steps
+ 5. Next Steps
 1- Apply the above 3 changes to env_poc.py.
 2- Modify run_ablation.py to only run Baseline and Neuro_Full (for speed).
 3- Run tests with 3 seeds: python run_ablation.py --timesteps 10000 --seeds 42 123 456.
