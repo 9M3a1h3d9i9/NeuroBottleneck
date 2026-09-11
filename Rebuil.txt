@@ -1,0 +1,24 @@
+# ۱. خروج از محیط مجازی
+deactivate
+
+# ۲. حذف محیط قدیمی
+cd ~/NeuroBottleneck
+rm -rf venv
+
+# ۳. ساخت محیط جدید با Python 3.11
+python3.11 -m venv venv
+source venv/bin/activate
+
+# ۴. ارتقاء pip و setuptools
+pip install --upgrade pip setuptools wheel
+
+# ۵. نصب TensorBoard به‌صورت جداگانه (قبل از بقیه کتابخانه‌ها)
+pip install tensorboard==2.16.0
+
+# ۶. نصب بقیه کتابخانه‌ها
+pip install torch==2.3.0 torchvision==0.18.0 torchaudio==2.3.0 --index-url https://download.pytorch.org/whl/cu121
+pip install torch-scatter torch-sparse torch-cluster torch-spline-conv -f https://data.pyg.org/whl/torch-2.3.0+cu121.html
+pip install torch-geometric==2.5.3 networkx==3.2.1 gymnasium==0.29.1 stable-baselines3==2.3.0 sb3-contrib==2.3.0 matplotlib==3.8.0 pandas==2.2.0 scipy==1.11.4 tqdm==4.66.1 numpy==1.26.4
+
+# ۷. تست TensorBoard
+tensorboard --logdir ./experiments/poc_ablations/outputs/logs/ --host 0.0.0.0 --port 6006
