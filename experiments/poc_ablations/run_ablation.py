@@ -23,8 +23,8 @@ from env_poc import NeuroBottleneckEnv
 SEEDS = [42, 123, 456, 789, 1012]
 EXPERIMENTS = [
     {'name': 'Baseline', 'use_gnn': False, 'use_mask': False},
-    # {'name': 'Telecom_Mask', 'use_gnn': False, 'use_mask': True},
-    # {'name': 'GNN_PPO', 'use_gnn': True, 'use_mask': False},
+    {'name': 'Telecom_Mask', 'use_gnn': False, 'use_mask': True},
+    {'name': 'GNN_PPO', 'use_gnn': True, 'use_mask': False},
     {'name': 'Neuro_Full', 'use_gnn': True, 'use_mask': True},  # نوآوری ما
 ]
 
