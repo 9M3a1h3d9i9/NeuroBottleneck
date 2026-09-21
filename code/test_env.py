@@ -12,3 +12,8 @@ obs, reward, terminated, truncated, info = env.step(action)
 print("Reward:", reward)
 print("Info:", info)
 print("New obs:", obs)
+
+
+import torch
+print(f"CUDA Available: {torch.cuda.is_available()}")
+print(f"Device: {torch.cuda.current_device() if torch.cuda.is_available() else 'CPU'}")
