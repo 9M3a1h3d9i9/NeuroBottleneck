@@ -34,39 +34,48 @@ def mask_fn(env):
     return env.get_action_mask()
 
 
+# New "run_experiment"
 def run_experiment(config, seed, graph, timesteps=30000):
     print(f"\n[RUN] {config['name']} | Seed {seed} | GNN: {config['use_gnn']} | Mask: {config['use_mask']}")
 
     env = NetworkEnvV11(graph, seed=seed)
+    n_edges = env.n_edges
 
     if config['use_mask']:
         env = ActionMasker(env, mask_fn)
 
     # === انتخاب Policy ===
-    # فعلاً همه با MlpPolicy (GNN در فاز بعدی)
-    policy = "MlpPolicy"
+    if config['use_gnn']:
+        # پیاده‌سازی GNN واقعی
+        from modules.gnn_encoder import GNNFeaturesExtractor
+        
+        policy_kwargs = {
+            "features_extractor_class": GNNFeaturesExtractor,
+            "features_extractor_kwargs": {
+                "features_dim": 65,
+                "n_edges": n_edges,
+                "gnn_hidden": 64,
+                "gnn_out": 64,
+            },
+        }
+        policy = "MlpPolicy"
+    else:
+        policy_kwargs = {}
+        policy = "MlpPolicy"
 
     if config['use_mask']:
         model = MaskablePPO(
             policy, env, seed=seed, verbose=0,
             learning_rate=3e-4, n_steps=128, batch_size=64,
             n_epochs=4, gamma=0.99,
+            policy_kwargs=policy_kwargs,
         )
     else:
         model = PPO(
-            "MLpPolicy",
-            env, 
-            policy_kwargs={
-                "features_extractor_class": GNNFeaturesExtractor,
-                "features_extractor_kwargs": {"n_edges": 15, "gnn_out": 64},
-            },
-            seed=seed, 
-            verbose=0,
-            learning_rate=3e-4, 
-            n_steps=128, 
-            batch_size=64,
-            n_epochs=4, 
-            gamma=0.99,
+            policy, env, seed=seed, verbose=0,
+            learning_rate=3e-4, n_steps=128, batch_size=64,
+            n_epochs=4, gamma=0.99,
+            policy_kwargs=policy_kwargs,
         )
 
     model.learn(total_timesteps=timesteps)
@@ -77,7 +86,6 @@ def run_experiment(config, seed, graph, timesteps=30000):
 
     for _ in range(50):
         if config['use_mask']:
-            # mask = env.env.get_action_mask()
             mask = env.unwrapped.get_action_mask()
             action, _ = model.predict(obs, action_masks=mask, deterministic=True)
         else:

@@ -26,7 +26,9 @@ class DualActionMasker:
         self.cap_min = capacity_min
         self.cap_max = capacity_max
         self.cap_step = capacity_step
-        self.gh_analyzer = GomoryHuAnalyzer(cache_interval=5)
+        # self.gh_analyzer = GomoryHuAnalyzer(cache_interval=5)
+        self.gh_analyzer = GomoryHuAnalyzer(cache_interval=100)  # هر ۱۰۰ گام
+
     
     def get_mask(self, graph, edges, step=0):
         """

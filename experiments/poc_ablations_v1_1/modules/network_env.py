@@ -28,13 +28,18 @@ class NetworkEnvV11(gym.Env):
     # ثابت‌های فیزیکی (طبق سند)
     CAPACITY_MIN = 300.0
     CAPACITY_MAX = 5000.0
-    CAPACITY_INIT = 2000.0
+    # CAPACITY_INIT = 2000.0
+    CAPACITY_INIT = 1000.0
     CAPACITY_STEP = 200.0
     
     DEMAND_MIN = 100.0
-    DEMAND_MAX = 4500.0
-    DEMAND_NOISE = 50.0
-    
+    # DEMAND_MAX = 4500.0
+    DEMAND_MAX = 1200.0   # متناسب با CAPACITY_INIT = 1000
+    # DEMAND_NOISE = 50.0
+    DEMAND_NOISE = 30.0
+
+    LAMBDA_MIN_THRESHOLD = 400.0  # آستانه بحرانی برای ماسک GH
+
     UTILIZATION_THRESHOLD = 0.8
     EPISODE_LENGTH = 50
     
@@ -75,7 +80,9 @@ class NetworkEnvV11(gym.Env):
             capacity_max=self.CAPACITY_MAX,
             capacity_step=self.CAPACITY_STEP,
         )
-        self.gh_analyzer = GomoryHuAnalyzer(cache_interval=5)
+        # self.gh_analyzer = GomoryHuAnalyzer(cache_interval=5)
+        self.gh_analyzer = GomoryHuAnalyzer(cache_interval=100)  # هر ۱۰۰ گام
+
         
         # === شمارنده‌ها ===
         self.step_count = 0
@@ -169,7 +176,11 @@ class NetworkEnvV11(gym.Env):
         for u, v in self.edges:
             cap = self.CAPACITY_INIT  # 2000
             # تقاضا بین ۳۰٪ تا ۷۰٪ ظرفیت
-            dem = np.random.uniform(0.3 * cap, 0.7 * cap)  # 600-1400
+            # dem = np.random.uniform(0.3 * cap, 0.7 * cap)  # 600-1400
+            #----------------------------------------------------------
+            # ⚡ تنش‌زا: demand بین ۶۰٪ تا ۹۵٪ ظرفیت
+            dem = np.random.uniform(0.6 * cap, 0.95 * cap)
+
             self.graph[u][v]['capacity'] = cap
             self.graph[u][v]['demand'] = dem
             self.graph[u][v]['utilization'] = dem / cap
