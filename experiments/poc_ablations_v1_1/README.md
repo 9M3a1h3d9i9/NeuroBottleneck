@@ -10,11 +10,11 @@
 
 ## نصب
 
-```bash
+
 pip install -r requirements_poc.txt
 
 
-# ---
+
 
 ═══════════════════════════════════════════════════════════════════════════════
   گزارش PoC v1.1 - نسخه ۲ (NeuroBottleneck Proof of Concept)
