@@ -1,0 +1,4 @@
+experiment,topology,seed,mean_reward,std_reward,mean_violations,mean_lambda_min,run_dir
+Baseline,abilene,42,,,,,
+GNN_only,abilene,42,,,,,
+Neuro_Full,abilene,42,,,,,
