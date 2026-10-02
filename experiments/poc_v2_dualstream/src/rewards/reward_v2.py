@@ -4,9 +4,10 @@ import numpy as np
 
 
 class RewardV2:
-    def __init__(self, cfg, num_edges):
+    def __init__(self, cfg, num_edges, u_th=0.8):
         self.cfg = cfg
         self.M = num_edges
+        self.u_th = u_th
 
     def compute(self, state_old, state_new, action, critical_edges,
                 lambda_min_old, lambda_min_new):
@@ -22,7 +23,7 @@ class RewardV2:
         r_thr = total_served / max(total_demand, 1.0)
 
         # 3. R_vio: violation ratio
-        violations = sum(1 for u in state_new['utilization'] if u > self.cfg.u_th)
+        violations = sum(1 for u in state_new['utilization'] if u > self.u_th)
         r_vio = violations / self.M
 
         # 4. R_cost: action cost
