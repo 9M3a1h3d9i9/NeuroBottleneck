@@ -23,7 +23,7 @@ class RewardV2:
         r_thr = total_served / max(total_demand, 1.0)
 
         # 3. R_vio: violation ratio
-        violations = sum(1 for u in state_new['utilization'] if u > self.u_th)
+        violations = sum(1 for u in state_new['utilization'] if u > self.u_th)  # Modified
         r_vio = violations / self.M
 
         # 4. R_cost: action cost

@@ -25,8 +25,7 @@ def plot_training_curves(output_dir, experiments, topologies, seeds,
                     if metric in df.columns:
                         vals = df[metric].dropna().values
                         if window > 1 and len(vals) >= window:
-                            vals = np.convolve(vals, np.ones(window)/window,
-                                               mode='valid')
+                            vals = np.convolve(vals, np.ones(window)/window, mode='valid')
                         all_curves.append(vals)
 
             if all_curves:
@@ -41,7 +40,12 @@ def plot_training_curves(output_dir, experiments, topologies, seeds,
         ax.set_xlabel("Training Step")
         ax.set_ylabel(metric)
         ax.set_title(f"Topology: {topo}")
-        ax.legend()
+        # ax.legend()
+        if has_data:
+            ax.legend()
+        else:
+            ax.text(0.5, 0.5, "No training data available", 
+                    ha='center', va='center', transform=ax.transAxes, fontsize=14)
         ax.grid(True, alpha=0.3)
 
     plt.tight_layout()

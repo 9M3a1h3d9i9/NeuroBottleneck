@@ -29,7 +29,9 @@ class NetworkEnv(gym.Env):
         self.N = len(self.nodes)
 
         self.gh_module = GHModule(threshold_mult=env_cfg.lambda_threshold_mult)
-        self.reward_fn = RewardV2(reward_cfg, self.M)
+        # self.reward_fn = RewardV2(reward_cfg, self.M)
+        self.reward_fn = RewardV2(reward_cfg, self.M, u_th=env_cfg.u_th) # Modified
+        
         self.mask_module = MaskModule(reward_cfg, self.M)
 
         self.action_space = spaces.Discrete(2 * self.M)
