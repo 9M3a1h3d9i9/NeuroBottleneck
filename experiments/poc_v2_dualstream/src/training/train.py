@@ -19,9 +19,10 @@ from configs import (EnvConfig, GHConfig, RewardConfig, ModelConfig,
                      TrainConfig, ExperimentConfig)
 
 
-def make_env(env_cfg, gh_cfg, reward_cfg, topology, seed):
+def make_env(env_cfg, gh_cfg, reward_cfg, topology, seed, use_gh_in_obs=True):
     return NetworkEnv(env_cfg, gh_cfg, reward_cfg,
-                      topology_name=topology, seed=seed)
+                      topology_name=topology, seed=seed,
+                      use_gh_in_obs=use_gh_in_obs)
 
 
 def make_extractor_class(exp_cfg, env):
@@ -77,7 +78,9 @@ def train_single(exp_cfg, env_cfg, gh_cfg, reward_cfg, train_cfg,
     os.makedirs(os.path.join(run_dir, "logs"), exist_ok=True)
     os.makedirs(os.path.join(run_dir, "models"), exist_ok=True)
 
-    env = make_env(env_cfg, gh_cfg, reward_cfg, topology, seed)
+    env = make_env(env_cfg, gh_cfg, reward_cfg, topology, seed, 
+                   use_gh_in_obs=exp_cfg.use_gh_in_obs)   
+    # use_gh_in_obs  ADDED
 
     extractor_cls = make_extractor_class({
         'use_gnn': exp_cfg.use_gnn,
@@ -176,7 +179,8 @@ def run_experiments(experiments, train_cfg, topology, seeds, output_dir):
             )
             try:
                 run_dir, eval_res = train_single(
-                    exp_cfg, env_cfg, gh_cfg, rc, train_cfg,
+                    exp_cfg,
+                    env_cfg, gh_cfg, rc, train_cfg,
                     topology, seed, output_dir
                 )
                 all_results.append({

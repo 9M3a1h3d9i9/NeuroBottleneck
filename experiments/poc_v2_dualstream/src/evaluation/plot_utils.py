@@ -9,12 +9,15 @@ import seaborn as sns
 
 
 def plot_training_curves(output_dir, experiments, topologies, seeds,
-                         metric='reward', window=50):
+                          metric='reward', window=50):
+    if isinstance(topologies, str):
+        topologies = [topologies]
+        
     fig, axes = plt.subplots(1, len(topologies), figsize=(6*len(topologies), 5),
                               squeeze=False)
-
     for ti, topo in enumerate(topologies):
         ax = axes[0][ti]
+        has_data = False   # new
         for exp in experiments:
             all_curves = []
             for seed in seeds:
@@ -24,30 +27,29 @@ def plot_training_curves(output_dir, experiments, topologies, seeds,
                     df = pd.read_csv(csv_path)
                     if metric in df.columns:
                         vals = df[metric].dropna().values
-                        if window > 1 and len(vals) >= window:
-                            vals = np.convolve(vals, np.ones(window)/window, mode='valid')
-                        all_curves.append(vals)
-
+                        if len(vals) > 0:
+                            w = min(window, max(1, len(vals) // 5))
+                            if w > 1:
+                                vals = np.convolve(vals, np.ones(w)/w, mode='valid')
+                            all_curves.append(vals)
             if all_curves:
+                has_data = True
                 min_len = min(len(c) for c in all_curves)
                 curves = np.array([c[:min_len] for c in all_curves])
                 mean = curves.mean(axis=0)
                 std = curves.std(axis=0)
                 x = np.arange(len(mean))
                 ax.plot(x, mean, label=exp.name, linewidth=2)
-                ax.fill_between(x, mean-std, mean+std, alpha=0.2)
-
-        ax.set_xlabel("Training Step")
-        ax.set_ylabel(metric)
-        ax.set_title(f"Topology: {topo}")
-        # ax.legend()
+                ax.fill_between(x, mean - std, mean + std, alpha=0.2)
         if has_data:
             ax.legend()
         else:
-            ax.text(0.5, 0.5, "No training data available", 
-                    ha='center', va='center', transform=ax.transAxes, fontsize=14)
+            ax.text(0.5, 0.5, "No training data", ha='center', va='center',
+                    transform=ax.transAxes, fontsize=12)
+        ax.set_xlabel("Training Step")
+        ax.set_ylabel(metric)
+        ax.set_title(f"{metric} - {topo}")
         ax.grid(True, alpha=0.3)
-
     plt.tight_layout()
     save_path = os.path.join(output_dir, f"training_curves_{metric}.png")
     plt.savefig(save_path, dpi=150)

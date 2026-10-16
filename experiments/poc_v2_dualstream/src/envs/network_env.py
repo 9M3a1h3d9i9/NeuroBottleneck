@@ -15,12 +15,14 @@ class NetworkEnv(gym.Env):
     metadata = {"render_modes": []}
 
     def __init__(self, env_cfg, gh_cfg, reward_cfg,
-                 topology_name="abilene", seed=42):
+                 topology_name="abilene", seed=42, use_gh_in_obs=True):
         super().__init__()
         self.cfg = env_cfg
         self.gh_cfg = gh_cfg
         self.reward_cfg = reward_cfg
         self.topology_name = topology_name
+        self.use_gh_in_obs = use_gh_in_obs   # new
+
 
         self.G = load_topology(topology_name)
         self.nodes = list(self.G.nodes())
@@ -99,12 +101,12 @@ class NetworkEnv(gym.Env):
     def _get_obs(self):
         node_feats = self._get_node_features().flatten()
         edge_feats = self._get_edge_features().flatten()
-        gh_feats = self._get_gh_features().flatten()
         # obs = np.concatenate([node_feats, edge_feats, gh_feats]).astype(np.float32)
         # return obs
 
-        # فقط اگر use_gh_in_obs=True باشد
+        # فقط اگر use_gh_in_obs=True باشد 
         if self.use_gh_in_obs:
+            gh_feats = self._get_gh_features().flatten()
             return np.concatenate([node_feats, edge_feats, gh_feats]).astype(np.float32)
         return np.concatenate([node_feats, edge_feats]).astype(np.float32)
 
