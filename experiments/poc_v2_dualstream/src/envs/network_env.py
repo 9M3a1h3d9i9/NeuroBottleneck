@@ -100,8 +100,13 @@ class NetworkEnv(gym.Env):
         node_feats = self._get_node_features().flatten()
         edge_feats = self._get_edge_features().flatten()
         gh_feats = self._get_gh_features().flatten()
-        obs = np.concatenate([node_feats, edge_feats, gh_feats]).astype(np.float32)
-        return obs
+        # obs = np.concatenate([node_feats, edge_feats, gh_feats]).astype(np.float32)
+        # return obs
+
+        # فقط اگر use_gh_in_obs=True باشد
+        if self.use_gh_in_obs:
+            return np.concatenate([node_feats, edge_feats, gh_feats]).astype(np.float32)
+        return np.concatenate([node_feats, edge_feats]).astype(np.float32)
 
     def _update_gh(self, force=False):
         if force or (self.step_count - self._last_gh_step >= self.gh_cfg.update_interval):

@@ -18,7 +18,10 @@ TIMESTEPS = int(os.environ.get("NB_TIMESTEPS", "10000"))
 print(f"[MAIN] Topology={TOPOLOGY}, Seed={SEED}, Timesteps={TIMESTEPS}")
 
 train_cfg = TrainConfig(total_timesteps=TIMESTEPS, seed=SEED)
-output_dir = os.path.join(ROOT, "outputs", f"goal1_{TOPOLOGY}_seed{SEED}")
+# output_dir = os.path.join(ROOT, "outputs", f"goal1_{TOPOLOGY}_seed{SEED}")
+VERSION = os.environ.get("NB_VERSION", "v1")
+output_dir = os.path.join(ROOT, "outputs", f"goal1_{TOPOLOGY}_seed{SEED}_{VERSION}")
+
 os.makedirs(output_dir, exist_ok=True)
 
 df = run_experiments(

@@ -85,15 +85,42 @@ class ExperimentConfig:
 # ============================================================
 
 GOAL1_EXPERIMENTS = [
-    ExperimentConfig(name="Baseline", use_gnn=False, use_gh_feature=False,
-                     use_gh_reward=False, use_soft_penalty=False,
-                     use_hard_mask=False, use_dual_stream=False),
-    ExperimentConfig(name="GNN_only", use_gnn=True, use_gh_feature=False,
-                     use_gh_reward=False, use_soft_penalty=False,
-                     use_hard_mask=False, use_dual_stream=False),
-    ExperimentConfig(name="Neuro_Full", use_gnn=True, use_gh_feature=True,
-                     use_gh_reward=True, use_soft_penalty=True,
-                     use_hard_mask=False, use_dual_stream=True),
+    ExperimentConfig(
+        name="Baseline", 
+        use_gnn=False, 
+        use_gh_feature=False,
+        use_gh_reward=False, 
+        use_soft_penalty=False,
+        use_hard_mask=False, 
+        use_dual_stream=False
+        ),
+    ExperimentConfig(
+        name="GNN_only",
+        use_gnn=True, 
+        use_gh_feature=False,
+        use_gh_reward=False, 
+        use_soft_penalty=False,
+        use_hard_mask=False, 
+        use_dual_stream=False
+        ),
+    ExperimentConfig(
+        name="Neuro_Full", 
+        use_gnn=True, 
+        use_gh_feature=True,
+        use_gh_reward=True, 
+        use_soft_penalty=True,
+        use_hard_mask=False, 
+        use_dual_stream=True
+        ),
+    # جدید
+    ExperimentConfig(
+        name="GH_Reward_Only",
+        use_gnn=True,
+        use_gh_feature=False,  # ← z_GH در observation نیست
+        use_gh_reward=True,    # ← ولی در reward هست
+        use_soft_penalty=True,
+        use_hard_mask=False,
+    )
 ]
 
 GOAL2_DRL_ALGOS = ["ppo", "a2c", "dqn", "sac"]
