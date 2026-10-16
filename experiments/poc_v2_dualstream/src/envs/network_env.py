@@ -42,6 +42,13 @@ class NetworkEnv(gym.Env):
         self.edge_dim = 3
         self.gh_raw_dim = 4 * self.M
         obs_dim = self.N * self.node_dim + self.M * self.edge_dim + self.gh_raw_dim
+
+        # رفع باگ داینامیک بودن فضای مشاهده
+        if use_gh_in_obs:
+            obs_dim = self.N * self.node_dim + self.M * self.edge_dim + self.gh_raw_dim
+        else:
+            obs_dim = self.N * self.node_dim + self.M * self.edge_dim
+
         self.observation_space = spaces.Box(
             low=-10.0, high=10.0, shape=(obs_dim,), dtype=np.float32
         )

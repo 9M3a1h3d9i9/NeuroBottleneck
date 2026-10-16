@@ -130,12 +130,26 @@ def train_single(exp_cfg, env_cfg, gh_cfg, reward_cfg, train_cfg,
     elif algo == 'a2c':
         model = A2C("MlpPolicy", env, policy_kwargs=policy_kwargs,
                     verbose=0, seed=seed)
+    # elif algo == 'dqn':
+    #     model = DQN("MlpPolicy", env, policy_kwargs=policy_kwargs,
+    #                 verbose=0, seed=seed)
+
     elif algo == 'dqn':
-        model = DQN("MlpPolicy", env, policy_kwargs=policy_kwargs,
-                    verbose=0, seed=seed)
+        # DQN needs net_arch as list, not dict
+        dqn_kwargs = dict(policy_kwargs)
+        dqn_kwargs['net_arch'] = [128, 64]
+        model = DQN("MlpPolicy", env, policy_kwargs=dqn_kwargs,
+                verbose=0, seed=seed,
+                tensorboard_log=os.path.join(run_dir, "logs"))
+    
+    # elif algo == 'sac':
+    #     model = SAC("MlpPolicy", env, policy_kwargs=policy_kwargs,
+    #                 verbose=0, seed=seed)
+
     elif algo == 'sac':
-        model = SAC("MlpPolicy", env, policy_kwargs=policy_kwargs,
-                    verbose=0, seed=seed)
+        raise ValueError("SAC does not support Discrete action spaces. "
+                        "Use PPO, A2C, or DQN instead.")
+
     else:
         raise ValueError(f"Unknown algo: {algo}")
 
