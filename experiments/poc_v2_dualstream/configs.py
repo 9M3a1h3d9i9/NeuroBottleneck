@@ -30,12 +30,12 @@ class GHConfig:
 
 @dataclass
 class RewardConfig:
-    alpha_res: float = 0.45
+    alpha_res: float = 0.55
     beta_thr: float = 0.25
     gamma_vio: float = 0.15
     delta_cost: float = 0.05
     epsilon_sinr: float = 0.10
-    zeta_soft: float = 0.50
+    zeta_soft: float = 0.10
     use_soft_penalty: bool = True
     use_hard_mask: bool = False
 
@@ -77,6 +77,7 @@ class ExperimentConfig:
     use_dual_stream: bool = True
     gnn_type: str = "graphsage"
     drl_algo: str = "ppo"
+    use_gh_in_obs: bool= True  # جدید
 
 
 # ============================================================
