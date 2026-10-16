@@ -30,10 +30,12 @@ class GHConfig:
 
 @dataclass
 class RewardConfig:
-    alpha_res: float = 0.55
-    beta_thr: float = 0.25
-    gamma_vio: float = 0.15
-    delta_cost: float = 0.05
+    
+    alpha_res: float = 0.40   # از 0.55
+    beta_thr: float = 0.20    # از 0.25
+    gamma_vio: float = 0.20   # از 0.15
+    delta_cost: float = 0.20  # از 0.05 ← مهم‌ترین تغییر
+
     epsilon_sinr: float = 0.10
     zeta_soft: float = 0.10
     use_soft_penalty: bool = True
