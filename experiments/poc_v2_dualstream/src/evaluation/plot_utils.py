@@ -1,16 +1,38 @@
-"""رسم نمودارهای مقایسه‌ای — نسخه مقاوم"""
+"""رسم نمودارهای مقایسه‌ای — نسخه ۲ (خوانا و تحلیلی)"""
 
 import os
 import json
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
 
+
+# ============================================================
+# ابزارهای کمکی
+# ============================================================
+
+def _rolling_mean_std(vals, window):
+    """میانگین و انحراف معیار متحرک با پنجره"""
+    if len(vals) < window:
+        window = max(1, len(vals) // 5)
+    mean = pd.Series(vals).rolling(window, min_periods=1).mean().values
+    std = pd.Series(vals).rolling(window, min_periods=1).std().fillna(0).values
+    return mean, std
+
+
+def _format_k(x, pos):
+    """فرمت محور X به K"""
+    return f"{int(x/1000)}K" if x >= 1000 else f"{int(x)}"
+
+
+# ============================================================
+# نمودار ۱: مقایسه میله‌ای (بدون تغییر)
+# ============================================================
 
 def plot_comparison_bar(summary_df, output_dir, metric='mean_reward'):
-    """نمودار میله‌ای مقایسه میانگین‌ها"""
     if metric not in summary_df.columns:
-        print(f"[WARN] Metric {metric} not found in summary")
+        print(f"[WARN] Metric {metric} not found")
         return
     fig, ax = plt.subplots(figsize=(10, 6))
     groups = summary_df.groupby(['experiment'])[metric].agg(['mean', 'std']).reset_index()
@@ -30,76 +52,96 @@ def plot_comparison_bar(summary_df, output_dir, metric='mean_reward'):
     print(f"[PLOT] Saved {save_path}")
 
 
+# ============================================================
+# نمودار ۲: منحنی آموزش (نسخه بهبود‌یافته)
+# ============================================================
+
 def plot_training_curves(output_dir, experiments, topologies, seeds,
-                          metric='reward', window=50):
+                          metric='reward', window=500):
     """
-    رسم منحنی‌های آموزش.
-    
-    ✅ FIX: if topologies is a string, wrap in list.
+    رسم منحنی‌های آموزش با:
+    - میانگین متحرک (پنجره ۵۰۰ گام)
+    - نوار انحراف معیار
+    - نشانگر نقطه همگرایی (۹۰٪ پاداش نهایی)
     """
-    # ✅ اگر رشته بود، به لیست تبدیل کن
     if isinstance(topologies, str):
         topologies = [topologies]
     
-    fig, axes = plt.subplots(1, len(topologies), figsize=(6*len(topologies), 5),
+    fig, axes = plt.subplots(1, len(topologies), figsize=(8*len(topologies), 6),
                               squeeze=False)
     
     for ti, topo in enumerate(topologies):
         ax = axes[0][ti]
-        has_data = False  # ✅ این خط حیاتی است
+        has_data = False
         
         for exp in experiments:
             all_curves = []
             for seed in seeds:
-                # ✅ مسیر: output_dir/EXP_NAME_TOPO_seedSEED/logs/training_metrics.csv
                 run_dir = os.path.join(output_dir, f"{exp.name}_{topo}_seed{seed}")
                 csv_path = os.path.join(run_dir, "logs", "training_metrics.csv")
-                
-                # ✅ Debug print برای شناسایی مسیر
                 if not os.path.exists(csv_path):
-                    print(f"[DEBUG] CSV not found: {csv_path}")
                     continue
-                
                 try:
                     df = pd.read_csv(csv_path)
-                except Exception as e:
-                    print(f"[DEBUG] Failed to read {csv_path}: {e}")
+                except Exception:
                     continue
-                
                 if metric not in df.columns:
-                    print(f"[DEBUG] Column '{metric}' not in {csv_path}. Columns: {list(df.columns)}")
                     continue
-                
                 vals = df[metric].dropna().values
                 if len(vals) == 0:
                     continue
-                
-                # پنجره داینامیک
-                w = min(window, max(1, len(vals) // 5))
-                if w > 1:
-                    vals = np.convolve(vals, np.ones(w)/w, mode='valid')
                 all_curves.append(vals)
             
             if all_curves:
                 has_data = True
                 min_len = min(len(c) for c in all_curves)
                 curves = np.array([c[:min_len] for c in all_curves])
-                mean = curves.mean(axis=0)
-                std = curves.std(axis=0)
-                x = np.arange(len(mean))
-                ax.plot(x, mean, label=exp.name, linewidth=2)
-                ax.fill_between(x, mean - std, mean + std, alpha=0.2)
+                
+                # میانگین و std روی Seedها
+                mean_across_seeds = curves.mean(axis=0)
+                std_across_seeds = curves.std(axis=0)
+                
+                # میانگین متحرک برای خوانایی
+                smoothed_mean, smoothed_std = _rolling_mean_std(mean_across_seeds, window)
+                x = np.arange(len(smoothed_mean))
+                
+                # نمودار اصلی
+                ax.plot(x, smoothed_mean, label=exp.name, linewidth=2.5)
+                ax.fill_between(x, 
+                                smoothed_mean - smoothed_std,
+                                smoothed_mean + smoothed_std,
+                                alpha=0.2)
+                
+                # نشانگر نقطه‌ی همگرایی (۹۰٪ پاداش نهایی)
+                final_val = smoothed_mean[-1]
+                target = 0.9 * final_val
+                if metric == 'violations':
+                    target = 1.1 * final_val  # برای violations، کاهش بهتر است
+                idx = np.where(smoothed_mean <= target)[0] if metric == 'violations' \
+                      else np.where(smoothed_mean >= target)[0]
+                if len(idx) > 0:
+                    conv_step = idx[0]
+                    ax.axvline(conv_step, linestyle=':', alpha=0.4, 
+                               color=ax.lines[-1].get_color())
         
         if has_data:
-            ax.legend()
+            ax.legend(loc='best', fontsize=10)
         else:
-            ax.text(0.5, 0.5, "No training data\n(check CSV paths in logs)",
+            ax.text(0.5, 0.5, "No training data",
                     ha='center', va='center', transform=ax.transAxes, fontsize=12)
         
-        ax.set_xlabel("Training Step")
-        ax.set_ylabel(metric)
-        ax.set_title(f"Training Curves ({metric}) - {topo}")
+        ax.set_xlabel("Training Step", fontsize=11)
+        ax.set_ylabel(metric.capitalize(), fontsize=11)
+        ax.set_title(f"{metric.capitalize()} Curves — {topo}", fontsize=13)
+        ax.xaxis.set_major_formatter(FuncFormatter(_format_k))
         ax.grid(True, alpha=0.3)
+        
+        # توضیح اضافه
+        if has_data:
+            ax.text(0.02, 0.98, 
+                    f"Window: {window}\nShading: ±1σ",
+                    transform=ax.transAxes, va='top', fontsize=9,
+                    bbox=dict(boxstyle='round', facecolor='white', alpha=0.7))
     
     plt.tight_layout()
     save_path = os.path.join(output_dir, f"training_curves_{metric}.png")
@@ -108,57 +150,102 @@ def plot_training_curves(output_dir, experiments, topologies, seeds,
     print(f"[PLOT] Saved {save_path}")
 
 
+# ============================================================
+# نمودار ۳: Overfitting Check (نسخه کاملاً بازنویسی‌شده)
+# ============================================================
+
 def plot_overfitting_check(output_dir, experiments, topology, seeds, plots_dir):
-    """بررسی Overfitting: مقایسه reward آموزش و ارزیابی"""
+    """
+    بررسی Overfitting با مقیاس یکسان:
+    - Train: میانگین مجموع پاداش ۵۰ گام (rolling 50)
+    - Eval: میانگین مجموع پاداش ۵ اپیزود
+    """
     if isinstance(topology, str):
         topology = [topology]
+    topo = topology[0]
     
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(12, 7))
     
+    exp_labels = []
     train_means = []
+    train_stds = []
     eval_means = []
-    labels = []
+    eval_stds = []
     
     for exp in experiments:
+        train_per_seed = []
+        eval_per_seed = []
+        
         for seed in seeds:
-            run_dir = os.path.join(output_dir, f"{exp.name}_{topology[0]}_seed{seed}")
+            run_dir = os.path.join(output_dir, f"{exp.name}_{topo}_seed{seed}")
             csv_path = os.path.join(run_dir, "logs", "training_metrics.csv")
             json_path = os.path.join(run_dir, "logs", "eval_results.json")
             
-            if not os.path.exists(csv_path) or not os.path.exists(json_path):
-                print(f"[DEBUG] Missing files for {exp.name} seed {seed}")
+            if not os.path.exists(csv_path):
                 continue
             
             try:
                 df = pd.read_csv(csv_path)
-                with open(json_path) as f:
-                    eval_res = json.load(f)
+                # ✅ تبدیل پاداش هر گام به "مجموع ۵۰ گام" (یک اپیزود)
+                if len(df) >= 50:
+                    # rolling sum با پنجره ۵۰ (طول اپیزود)
+                    rolling_sum = df['reward'].rolling(50, min_periods=1).sum()
+                    train_mean_last = rolling_sum.iloc[-1]  # آخرین اپیزود
+                    train_per_seed.append(train_mean_last)
                 
-                # میانگین ۱۰۰ گام آخر آموزش
-                if len(df) > 0:
-                    train_mean = df['reward'].rolling(50, min_periods=1).mean().iloc[-1]
-                    train_means.append(train_mean)
-                    eval_means.append(eval_res['mean_reward'])
-                    labels.append(f"{exp.name}\nseed={seed}")
+                # Eval از json
+                if os.path.exists(json_path):
+                    with open(json_path) as f:
+                        eval_res = json.load(f)
+                    eval_per_seed.append(eval_res['mean_reward'])
             except Exception as e:
-                print(f"[DEBUG] Failed to process {run_dir}: {e}")
+                print(f"[DEBUG] {run_dir}: {e}")
                 continue
+        
+        if train_per_seed and eval_per_seed:
+            exp_labels.append(exp.name)
+            train_means.append(np.mean(train_per_seed))
+            train_stds.append(np.std(train_per_seed))
+            eval_means.append(np.mean(eval_per_seed))
+            eval_stds.append(np.std(eval_per_seed))
     
-    if not train_means:
-        ax.text(0.5, 0.5, "No overfitting data available",
+    if not exp_labels:
+        ax.text(0.5, 0.5, "No overfitting data",
                 ha='center', va='center', transform=ax.transAxes, fontsize=14)
     else:
-        x = np.arange(len(labels))
+        x = np.arange(len(exp_labels))
         width = 0.35
-        ax.bar(x - width/2, train_means, width, label='Train (last 50 avg)', alpha=0.7)
-        ax.bar(x + width/2, eval_means, width, label='Eval (deterministic)', alpha=0.7)
+        
+        bars1 = ax.bar(x - width/2, train_means, width, yerr=train_stds,
+                       capsize=5, label='Train (last episode avg)',
+                       color='#3498db', alpha=0.8)
+        bars2 = ax.bar(x + width/2, eval_means, width, yerr=eval_stds,
+                       capsize=5, label='Eval (5 episodes avg)',
+                       color='#e67e22', alpha=0.8)
+        
+        # نمایش اعداد روی میله‌ها
+        for bar in bars1:
+            h = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width()/2, h,
+                    f'{h:.2f}', ha='center', va='bottom', fontsize=9)
+        for bar in bars2:
+            h = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width()/2, h,
+                    f'{h:.2f}', ha='center', va='bottom', fontsize=9)
+        
+        # تحلیل فاصله (Gap)
+        gaps = [abs(t - e) / max(abs(e), 1) * 100 for t, e in zip(train_means, eval_means)]
+        gap_str = ", ".join([f"{exp}: {gap:.1f}%" 
+                             for exp, gap in zip(exp_labels, gaps)])
+        
         ax.set_xticks(x)
-        ax.set_xticklabels(labels, rotation=15, ha='right')
-        ax.set_ylabel("Reward")
-        ax.legend()
+        ax.set_xticklabels(exp_labels, fontsize=11)
+        ax.set_ylabel("Episode Reward (sum over 50 steps)", fontsize=11)
+        ax.set_title(f"Train vs Eval — Overfitting Check ({topo})\n"
+                     f"Gap (|Train−Eval|/Eval): {gap_str}", fontsize=12)
+        ax.legend(loc='best', fontsize=10)
+        ax.grid(True, alpha=0.3, axis='y')
     
-    ax.set_title(f"Overfitting Check ({topology[0]})")
-    ax.grid(True, alpha=0.3, axis='y')
     plt.tight_layout()
     save_path = os.path.join(plots_dir, "overfitting_check.png")
     plt.savefig(save_path, dpi=150)
@@ -166,24 +253,23 @@ def plot_overfitting_check(output_dir, experiments, topology, seeds, plots_dir):
     print(f"[PLOT] Saved {save_path}")
 
 
+# ============================================================
+# تابع اصلی
+# ============================================================
+
 def plot_all(summary_df, output_dir, experiments, topology, seeds):
-    """
-    فراخوانی همه نمودارها.
-    
-    ✅ FIX: همه توابع با لیست topology صدا زده می‌شوند.
-    """
     plots_dir = os.path.join(output_dir, "plots")
     os.makedirs(plots_dir, exist_ok=True)
     
-    # نمودارهای میله‌ای
+    # ۱. میله‌ای‌ها
     plot_comparison_bar(summary_df, plots_dir, 'mean_reward')
     plot_comparison_bar(summary_df, plots_dir, 'mean_violations')
     plot_comparison_bar(summary_df, plots_dir, 'mean_lambda_min')
     
-    # ✅ نمودارهای منحنی — با [topology] که لیست است
+    # ۲. منحنی‌های آموزش
     topologies_list = [topology] if isinstance(topology, str) else topology
     for metric in ['reward', 'violations']:
         plot_training_curves(output_dir, experiments, topologies_list, seeds, metric=metric)
     
-    # Overfitting
+    # ۳. Overfitting
     plot_overfitting_check(output_dir, experiments, topology, seeds, plots_dir)
