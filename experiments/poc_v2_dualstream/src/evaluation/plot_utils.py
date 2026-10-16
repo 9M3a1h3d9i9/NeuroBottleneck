@@ -254,6 +254,147 @@ def plot_overfitting_check(output_dir, experiments, topology, seeds, plots_dir):
 
 
 # ============================================================
+# نمودار ۴: CDF (توزیع تجمعی) — اثبات Robustness
+# ============================================================
+
+def plot_cdf(output_dir, experiments, topology, seeds, metric='reward'):
+    """
+    نمودار CDF: توزیع تجمعی KPI در Seedهای مختلف.
+    نشان می‌دهد چند درصد اپیزودها زیر مقدار X بوده‌اند.
+    منحنی سمت راست‌تر = عملکرد بهتر در کل توزیع.
+    """
+    if isinstance(topology, str):
+        topology = [topology]
+    topo = topology[0]
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    for exp in experiments:
+        all_values = []
+        for seed in seeds:
+            run_dir = os.path.join(output_dir, f"{exp.name}_{topo}_seed{seed}")
+            json_path = os.path.join(run_dir, "logs", "eval_results.json")
+            if os.path.exists(json_path):
+                with open(json_path) as f:
+                    data = json.load(f)
+                all_values.extend(data.get('raw_rewards', []))
+        
+        if all_values:
+            sorted_vals = np.sort(all_values)
+            cdf = np.arange(1, len(sorted_vals) + 1) / len(sorted_vals)
+            ax.plot(sorted_vals, cdf, label=exp.name, linewidth=2.5)
+    
+    ax.set_xlabel(f"{metric.capitalize()} (higher is better)", fontsize=12)
+    ax.set_ylabel("CDF (Cumulative Probability)", fontsize=12)
+    ax.set_title(f"CDF of {metric.capitalize()} — {topo}", fontsize=13)
+    ax.legend(loc='lower right', fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_ylim([0, 1.02])
+    
+    save_path = os.path.join(output_dir, f"cdf_{metric}.png")
+    plt.savefig(save_path, dpi=150)
+    plt.close()
+    print(f"[PLOT] Saved {save_path}")
+
+
+# ============================================================
+# نمودار ۵: Resilience Curve (تکامل زمانی λ_min)
+# ============================================================
+
+def plot_resilience_curve(output_dir, experiments, topology, seeds):
+    """
+    نمودار تاب‌آوری: تکامل زمانی λ_min در یک اپیزود.
+    نشان می‌دهد سیستم چقدر سریع بازیابی می‌شود.
+    """
+    if isinstance(topology, str):
+        topology = [topology]
+    topo = topology[0]
+    
+    fig, ax = plt.subplots(figsize=(12, 6))
+    
+    for exp in experiments:
+        all_curves = []
+        for seed in seeds:
+            run_dir = os.path.join(output_dir, f"{exp.name}_{topo}_seed{seed}")
+            csv_path = os.path.join(run_dir, "logs", "training_metrics.csv")
+            if os.path.exists(csv_path):
+                df = pd.read_csv(csv_path)
+                if 'lambda_min' in df.columns and len(df) >= 50:
+                    # یک اپیزود ۵۰ گامی از انتهای آموزش
+                    episode = df['lambda_min'].iloc[-50:].values
+                    all_curves.append(episode)
+        
+        if all_curves:
+            min_len = min(len(c) for c in all_curves)
+            curves = np.array([c[:min_len] for c in all_curves])
+            mean = curves.mean(axis=0)
+            std = curves.std(axis=0)
+            x = np.arange(len(mean))
+            ax.plot(x, mean, label=exp.name, linewidth=2.5)
+            ax.fill_between(x, mean - std, mean + std, alpha=0.2)
+    
+    ax.set_xlabel("Step within Episode (0-49)", fontsize=12)
+    ax.set_ylabel("λ_min (Resilience Index)", fontsize=12)
+    ax.set_title(f"Resilience Curve — {topo}", fontsize=13)
+    ax.legend(loc='best', fontsize=11)
+    ax.grid(True, alpha=0.3)
+    
+    save_path = os.path.join(output_dir, "resilience_curve.png")
+    plt.savefig(save_path, dpi=150)
+    plt.close()
+    print(f"[PLOT] Saved {save_path}")
+
+
+# ============================================================
+# نمودار ۶: Box Plot (توزیع در چندین Seed)
+# ============================================================
+
+def plot_box_seeds(output_dir, experiments, topology, seeds, metric='mean_reward'):
+    """
+    Box Plot: توزیع نتایج در چندین Seed.
+    نشان می‌دهد برتری مدل، پایدار است یا نوسان دارد.
+    """
+    if isinstance(topology, str):
+        topology = [topology]
+    topo = topology[0]
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    data = []
+    labels = []
+    for exp in experiments:
+        exp_values = []
+        for seed in seeds:
+            run_dir = os.path.join(output_dir, f"{exp.name}_{topo}_seed{seed}")
+            json_path = os.path.join(run_dir, "logs", "eval_results.json")
+            if os.path.exists(json_path):
+                with open(json_path) as f:
+                    eval_data = json.load(f)
+                exp_values.append(eval_data.get(metric, 0))
+        if exp_values:
+            data.append(exp_values)
+            labels.append(exp.name)
+    
+    if data:
+        bp = ax.boxplot(data, labels=labels, patch_artist=True,
+                        widths=0.5, showmeans=True)
+        colors = plt.cm.tab10(np.linspace(0, 1, len(data)))
+        for patch, color in zip(bp['boxes'], colors):
+            patch.set_facecolor(color)
+            patch.set_alpha(0.6)
+    
+    ax.set_ylabel(metric, fontsize=12)
+    ax.set_title(f"Seed Variance — {metric} ({topo})", fontsize=13)
+    ax.grid(True, alpha=0.3, axis='y')
+    plt.xticks(rotation=15)
+    
+    save_path = os.path.join(output_dir, f"box_seeds_{metric}.png")
+    plt.savefig(save_path, dpi=150)
+    plt.close()
+    print(f"[PLOT] Saved {save_path}")
+
+
+# ============================================================
 # تابع اصلی
 # ============================================================
 
@@ -270,6 +411,10 @@ def plot_all(summary_df, output_dir, experiments, topology, seeds):
     topologies_list = [topology] if isinstance(topology, str) else topology
     for metric in ['reward', 'violations']:
         plot_training_curves(output_dir, experiments, topologies_list, seeds, metric=metric)
-    
+
+    plot_cdf(output_dir, experiments, topology, seeds, metric='reward')
+    plot_resilience_curve(output_dir, experiments, topology, seeds)
+    plot_box_seeds(output_dir, experiments, topology, seeds, metric='mean_reward')
+
     # ۳. Overfitting
     plot_overfitting_check(output_dir, experiments, topology, seeds, plots_dir)
