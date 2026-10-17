@@ -1,4 +1,4 @@
 experiment,topology,seed,mean_reward,std_reward,mean_violations,mean_lambda_min,run_dir
-DRL_PPO,abilene,42,14.151639186916736,0.44511106896516817,1.932,268.68803648385796,/home/mahdi-cs-313/NeuroBottleneck/experiments/poc_v2_dualstream/outputs/goal2_abilene_seed42_50K/DRL_PPO_abilene_seed42
-DRL_A2C,abilene,42,14.729934136197375,0.2954053075293995,1.1039999999999999,301.12915239429645,/home/mahdi-cs-313/NeuroBottleneck/experiments/poc_v2_dualstream/outputs/goal2_abilene_seed42_50K/DRL_A2C_abilene_seed42
-DRL_DQN,abilene,42,14.813492005969858,0.43691653662306223,1.072,394.295343731149,/home/mahdi-cs-313/NeuroBottleneck/experiments/poc_v2_dualstream/outputs/goal2_abilene_seed42_50K/DRL_DQN_abilene_seed42
+DRL_PPO,abilene,42,11.745360825699425,0.49747575917304665,0.9560000000000001,268.68803648385796,/home/mahdi-cs-313/NeuroBottleneck/experiments/poc_v2_dualstream/outputs/goal2_abilene_seed42_50K/DRL_PPO_abilene_seed42
+DRL_A2C,abilene,42,11.074241120900883,0.3396615926223755,2.092,281.69016511620896,/home/mahdi-cs-313/NeuroBottleneck/experiments/poc_v2_dualstream/outputs/goal2_abilene_seed42_50K/DRL_A2C_abilene_seed42
+DRL_DQN,abilene,42,11.506212702585747,0.5003455295048747,1.2,344.72059979339684,/home/mahdi-cs-313/NeuroBottleneck/experiments/poc_v2_dualstream/outputs/goal2_abilene_seed42_50K/DRL_DQN_abilene_seed42

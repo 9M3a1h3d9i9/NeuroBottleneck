@@ -1,8 +1,6 @@
-# src/rewards/reward_v2.py
 """تابع پاداش v2.0 با ۵ مؤلفه + Soft Penalty"""
 
 import numpy as np
-
 
 class RewardV2:
     def __init__(self, cfg, num_edges, u_th=0.8, delta_c=200.0):
@@ -37,10 +35,37 @@ class RewardV2:
         violations = sum(1 for u in state_new['utilization'] if u > self.u_th)
         r_vio = violations / self.M
 
-        # 4. R_cost
+        # 4. R_cost (عملا هزینه ساختاری می باشد)
         edge_idx, direction = action
-        delta_c_actual = self.delta_c if direction == 1 else 0.0
-        r_cost = delta_c_actual / (self.M * self.delta_c)
+        
+        # delta_c_actual = self.delta_c if direction == 1 else 0.0
+        # r_cost = delta_c_actual / (self.M * self.delta_c) # این همیشه 0.066 است!
+
+            # Note:
+                # Even if you set its weight to 0.20, the maximum penalty 
+                # is 0.20 * 0.066 = 0.013, which is negligible compared to
+                #  the reward of 0.40 gained by increasing λ min. 
+                # DQN will still cheat.
+
+        if direction == 1:
+            # هزینه افزایش ظرفیت بر اساس ظرفیت فعلی یال 
+            # (یال‌های کم‌ظرفیت گران‌ترند)
+            # و اگر یال در CriticalEdges باشد، هزینه دوبرابر است
+
+            u, v = state_new['edges'][edge_idx]
+            edge_key = (u, v) if u <= v else (v, u)
+            base_cost = self.delta_c / max(state_new['capacity'][edge_idx], 1.0)
+            if edge_key in critical_edges:
+                base_cost *= 2.0
+            r_cost = base_cost
+        else:
+            r_cost = 0.0
+
+        # Note:
+            # Cost of increasing capacity based on the edge's current capacity 
+            # (lower-capacity edges are more expensive)
+            # and if the edge is in CriticalEdges, the cost is doubled
+
 
         # 5. R_sinr
         sinr = state_new.get('sinr', [10.0] * self.M)
