@@ -12,7 +12,7 @@ from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
 import gymnasium as gym
 
 from .gnn_encoders import build_gnn
-from .topologies import load_topology
+from ..envs.topologies import load_topology
 
 class DualStreamExtractor(BaseFeaturesExtractor):
     def __init__(self, observation_space, node_dim, edge_dim, num_nodes, num_edges,
