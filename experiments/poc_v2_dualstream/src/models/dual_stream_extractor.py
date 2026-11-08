@@ -12,7 +12,7 @@ from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
 import gymnasium as gym
 
 from .gnn_encoders import build_gnn
-
+from .topologies import load_topology
 
 class DualStreamExtractor(BaseFeaturesExtractor):
     def __init__(self, observation_space, node_dim, edge_dim, num_nodes, num_edges,
@@ -97,12 +97,24 @@ class DualStreamExtractor(BaseFeaturesExtractor):
         return self.final_proj(z)
 
     def _get_edge_index(self, device):
-        """edge_index پیش‌فرض — برای Abilene"""
-        edges = []
-        n = self.num_nodes
-        for i in range(min(n - 1, self.num_edges)):
-            edges.append([i, i + 1])
-            edges.append([i + 1, i])
-        if not edges:
-            edges = [[0, 0]]
-        return torch.tensor(edges, dtype=torch.long, device=device).t().contiguous()
+        # Load the real Abilene topology
+        G = load_topology("abilene")
+        nodes = list(G.nodes())
+        edges = list(G.edges())
+        
+        # Map node names to index (0 to N-1)
+        node_to_idx = {n: i for i, n in enumerate(nodes)}
+        
+        src, dst = [], []
+        for u, v in edges:
+            i, j = node_to_idx[u], node_to_idx[v]
+            # Add edges for both directions (undirected graph)
+            src.extend([i, j])
+            dst.extend([j, i])
+        
+        if not src:
+            # Fallback if graph is empty
+            src, dst = [0], [0]
+            
+        edge_index = np.array([src, dst], dtype=np.int64)
+        return torch.tensor(edge_index, dtype=torch.long, device=device)
