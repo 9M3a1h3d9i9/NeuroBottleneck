@@ -15,14 +15,14 @@ class NetworkEnv(gym.Env):
     metadata = {"render_modes": []}
 
     def __init__(self, env_cfg, gh_cfg, reward_cfg,
-                 topology_name="abilene", seed=42, use_gh_in_obs=True):
+                 topology_name="abilene", seed=42, use_gh_in_obs=True, use_gh_reward=True):
         super().__init__()
         self.cfg = env_cfg
         self.gh_cfg = gh_cfg
         self.reward_cfg = reward_cfg
         self.topology_name = topology_name
         self.use_gh_in_obs = use_gh_in_obs   # new
-
+        self.use_gh_reward = use_gh_reward   # جلوگیری از نشت پاداش
 
         self.G = load_topology(topology_name)
         self.nodes = list(self.G.nodes())
@@ -182,9 +182,20 @@ class NetworkEnv(gym.Env):
             'sinr': self.sinr,
             'edges': self.edges,
         }
+        
+        # رفع باگ نشت پاداش GH: اعمال شرط برای ارسال اطلاعات ساختاری
+        if self.use_gh_reward:
+            passed_critical_edges = self.critical_edges
+            passed_lambda_min = self.lambda_min
+            passed_lambda_old = lambda_old
+        else:
+            passed_critical_edges = set()
+            passed_lambda_min = 0.0
+            passed_lambda_old = 0.0
+            
         R, components = self.reward_fn.compute(
             None, state_new, (edge_idx, direction),
-            self.critical_edges, lambda_old, self.lambda_min
+            passed_critical_edges, passed_lambda_old, passed_lambda_min  # 
         )
 
         terminated = self.step_count >= self.cfg.episode_len
