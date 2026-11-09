@@ -19,10 +19,11 @@ from configs import (EnvConfig, GHConfig, RewardConfig, ModelConfig,
                      TrainConfig, ExperimentConfig)
 
 
-def make_env(env_cfg, gh_cfg, reward_cfg, topology, seed, use_gh_in_obs=True):
+def make_env(env_cfg, gh_cfg, reward_cfg, topology, seed, use_gh_in_obs=True, use_gh_reward=True):
     return NetworkEnv(env_cfg, gh_cfg, reward_cfg,
                       topology_name=topology, seed=seed,
-                      use_gh_in_obs=use_gh_in_obs)
+                      use_gh_in_obs=use_gh_in_obs,
+                      use_gh_reward=use_gh_reward)
 
 
 def make_extractor_class(exp_cfg, env):
@@ -78,9 +79,14 @@ def train_single(exp_cfg, env_cfg, gh_cfg, reward_cfg, train_cfg,
     os.makedirs(os.path.join(run_dir, "logs"), exist_ok=True)
     os.makedirs(os.path.join(run_dir, "models"), exist_ok=True)
 
-    env = make_env(env_cfg, gh_cfg, reward_cfg, topology, seed, 
-                   use_gh_in_obs=exp_cfg.use_gh_in_obs)   
+    # env = make_env(env_cfg, gh_cfg, reward_cfg, topology, seed, 
+    #                use_gh_in_obs=exp_cfg.use_gh_in_obs)   
     # use_gh_in_obs  ADDED
+    
+    # Pass both observation and reward flags safely
+    env = make_env(env_cfg, gh_cfg, reward_cfg, topology, seed, 
+                   use_gh_in_obs=getattr(exp_cfg, 'use_gh_in_obs', True),
+                   use_gh_reward=getattr(exp_cfg, 'use_gh_reward', True))
 
     extractor_cls = make_extractor_class({
         'use_gnn': exp_cfg.use_gnn,

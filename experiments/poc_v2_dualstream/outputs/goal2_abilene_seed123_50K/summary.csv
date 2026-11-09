@@ -1,0 +1,4 @@
+experiment,topology,seed,mean_reward,std_reward,mean_violations,mean_lambda_min,run_dir
+DRL_PPO,abilene,123,11.334567536626551,0.48574945640438355,1.1880000000000002,239.99228140572558,/home/mahdi-cs-313/NeuroBottleneck/experiments/poc_v2_dualstream/outputs/goal2_abilene_seed123_50K/DRL_PPO_abilene_seed123
+DRL_A2C,abilene,123,11.204694338309974,0.827220273706342,2.272,182.5719719299761,/home/mahdi-cs-313/NeuroBottleneck/experiments/poc_v2_dualstream/outputs/goal2_abilene_seed123_50K/DRL_A2C_abilene_seed123
+DRL_DQN,abilene,123,11.109637453602172,0.24520115317017982,1.884,339.21654879140124,/home/mahdi-cs-313/NeuroBottleneck/experiments/poc_v2_dualstream/outputs/goal2_abilene_seed123_50K/DRL_DQN_abilene_seed123
