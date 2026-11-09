@@ -9,7 +9,7 @@ for seed in 42 123 456; do
     NB_TOPOLOGY=abilene \
     NB_SEED=$seed \
     NB_TIMESTEPS=50000 \
-    NB_VERSION=v4_fixed_reward \
+    NB_VERSION=v5_bugfixed \
     bash scripts/run_goal1_dualstream.sh abilene $seed 50000 v4_fixed_reward
     
     echo "Seed $seed finished at $(date)"
